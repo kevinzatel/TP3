@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string-array name="tipo">
+        <item>Músico</item>
+        <item>Banda</item>
+    </string-array>
+    <string-array name="instrumentos">
+        <item>Guitarra</item>
+        <item>Piano</item>
+        <item>Batería</item>
+        <item>Voz</item>
+    </string-array>
+</resources>
