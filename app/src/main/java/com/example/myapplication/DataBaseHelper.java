@@ -16,6 +16,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_PASSWORD="PASSWORD";
     public static final String COLUMN_INSTRUMENT="INSTRUMENT";
     public static final String COLUMN_ISBAND="ISBAND";
+    public static final String COLUMN_DESCRIPTION="DESCRIPTION";
 
     public DataBaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -23,7 +24,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table " + USERS_TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, USERNAME TEXT NOT NULL, PASSWORD TEXT NOT NULL, INSTRUMENT TEXT, ISBAND INTEGER NOT NULL CHECK (ISBAND IN (0,1)))");
+        db.execSQL("create table " + USERS_TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, USERNAME TEXT NOT NULL, PASSWORD TEXT NOT NULL, INSTRUMENT TEXT, ISBAND INTEGER NOT NULL CHECK (ISBAND IN (0,1)), DESCRIPTION TEXT NOT NULL)");
     }
 
     @Override
@@ -32,13 +33,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertUser(String userName, String password, String instrument, int isBand){
+    public boolean insertUser(String userName, String password, String instrument, int isBand, String description){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_USERNAME, userName);
         contentValues.put(COLUMN_PASSWORD, password);
         contentValues.put(COLUMN_INSTRUMENT, instrument);
         contentValues.put(COLUMN_ISBAND, isBand);
+        contentValues.put(COLUMN_DESCRIPTION, description);
         long result = db.insert(USERS_TABLE_NAME, null, contentValues);
         if(result == -1)
             return false;

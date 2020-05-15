@@ -34,8 +34,15 @@ public class LogInActivity extends AppCompatActivity {
                 User user = db.getUser(userName);
 
                 if(user != null && userName.equals(user.getUserName()) && password.equals(user.getPassword())){
-                    Intent landingIntent = new Intent(getApplicationContext(), LandingActivity.class);
-                    landingIntent.putExtra("userName", userName);
+                    Intent landingIntent;
+                    if(user.getIsBand()){
+                        landingIntent = new Intent(getApplicationContext(), BandLandingPageActivity.class);
+                        landingIntent.putExtra("user", user);
+                    }
+                    else{
+                        landingIntent = new Intent(getApplicationContext(), MusicianLandingActivity.class);
+                        landingIntent.putExtra("userName", userName);
+                    }
                     startActivity(landingIntent);
                 }
                 else{

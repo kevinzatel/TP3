@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,9 +16,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class SignUpActivity extends AppCompatActivity {
     DataBaseHelper db;
-    EditText userNameTxt, passwordTxt, confirmPasswordTxt;
+    EditText userNameTxt, passwordTxt, confirmPasswordTxt, descripcionTxt;
     Button signUpBtn;
-    String type, instrument;
+    String type, instrument, turno;
     int isBand;
 
     @Override
@@ -29,6 +30,7 @@ public class SignUpActivity extends AppCompatActivity {
         userNameTxt = (EditText) findViewById(R.id.userNameTxt);
         passwordTxt = (EditText) findViewById(R.id.passwordTxt);
         confirmPasswordTxt = (EditText) findViewById(R.id.confirmPasswordTxt);
+        descripcionTxt = (EditText) findViewById(R.id.descriptionTxt);
         signUpBtn = (Button) findViewById(R.id.signUpBtn);
 
         fillDropDowns();
@@ -43,11 +45,13 @@ public class SignUpActivity extends AppCompatActivity {
                 String userName = userNameTxt.getText().toString();
                 String password = passwordTxt.getText().toString();
                 String confirmPassword = confirmPasswordTxt.getText().toString();
-                if(isUserFormValid(userName, password, confirmPassword)){
-                        isAdded = db.insertUser(userName, password, instrument, isBand);
+                String description = descripcionTxt.getText().toString();
+                if(isUserFormValid(userName, password, confirmPassword, description)){
+                        isAdded = db.insertUser(userName, password, instrument, isBand, description);
                         if(isAdded) {
                             Toast.makeText(SignUpActivity.this, "Created Successfully", Toast.LENGTH_LONG).show();
-                            ShowUsers();
+                            Intent loginIntent = new Intent(getApplicationContext(), LogInActivity.class);
+                            startActivity(loginIntent);
                         }
                         else
                             Toast.makeText(SignUpActivity.this, "Error", Toast.LENGTH_LONG).show();
@@ -61,14 +65,19 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void fillDropDowns(){
-        final Spinner tipoDropDown, instrumentoDropDown;
-        String[] tipoItems, instrumentoItems;
-        ArrayAdapter<String> tipoAdapter, instrumentoAdapter;
+        final Spinner tipoDropDown, instrumentoDropDown, turnoDropDown;
+        String[] tipoItems, instrumentoItems, turnoItems;
+        ArrayAdapter<String> tipoAdapter, instrumentoAdapter, turnoAdapter;
         final TextView instrumentoTxt;
 
         tipoDropDown = findViewById(R.id.tipoDropDown);
         tipoItems = getResources().getStringArray(R.array.tipo);
         tipoAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, tipoItems);
+
+
+        turnoDropDown = findViewById(R.id.turnoDropDown);
+        turnoItems = getResources().getStringArray(R.array.turnos);
+        turnoAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, turnoItems);
 
         instrumentoTxt = findViewById(R.id.instrumentoTxt);
         instrumentoDropDown = findViewById(R.id.instrumentoDropDown);
@@ -100,6 +109,20 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
+        turnoDropDown.setAdapter(turnoAdapter);
+        turnoDropDown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+                turno = (String) parent.getItemAtPosition(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
 
         instrumentoDropDown.setAdapter(instrumentoAdapter);
         instrumentoDropDown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -116,7 +139,7 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
-    private boolean isUserFormValid(String userName, String password, String confirmPassword){
+    private boolean isUserFormValid(String userName, String password, String confirmPassword, String descripcion){
         Boolean isValid = true;
 
         if(userName.isEmpty()){
@@ -136,6 +159,10 @@ public class SignUpActivity extends AppCompatActivity {
         }
         if(!password.equals(confirmPassword)){
             confirmPasswordTxt.setError("Las contreseñas deben coincidir.");
+            isValid = false;
+        }
+        if(descripcion.isEmpty()){
+            descripcionTxt.setError("Ingrese una descripcion por favor.");
             isValid = false;
         }
         return isValid;
