@@ -3,16 +3,20 @@ package com.example.myapplication;
 import java.io.Serializable;
 
 public class User implements Serializable {
+
     private String userName;
     private String password;
-    private String description;
-    private String turno;
+    private String instrument;
     private boolean isBand;
 
-    public User(String userName, String password, String instrument, boolean isBand){
-        setUserName(userName);
-        setPassword(password);
-        setIsBand(isBand);
+    public User() {
+    }
+
+    public User(String userName, String password, String instrument, boolean isBand) {
+        this.userName = userName;
+        this.password = password;
+        this.instrument = instrument;
+        this.isBand = isBand;
     }
 
     public String getUserName() {
@@ -31,11 +35,20 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public boolean getIsBand() {
+    public String getInstrument() {
+        return instrument;
+    }
+
+    public void setInstrument(String instrument) {
+        this.instrument = instrument;
+    }
+
+    public boolean isBand() {
         return isBand;
     }
 
-    public void setIsBand(boolean isBand) {
-        this.isBand = isBand;
+    public void setBand(boolean band) {
+        isBand = band;
     }
+
 }

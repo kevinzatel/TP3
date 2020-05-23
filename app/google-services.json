@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "647917204897",
+    "firebase_url": "https://lets-play-3a3d8.firebaseio.com",
+    "project_id": "lets-play-3a3d8",
+    "storage_bucket": "lets-play-3a3d8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:647917204897:android:4becb1c425e17a2fda47e0",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "647917204897-7netr1r0ebc4qbkp23et3hs74e50nc7g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.myapplication",
+            "certificate_hash": "7d40a9320a8a8eda7b780de132d19aa78fdf67fe"
+          }
+        },
+        {
+          "client_id": "647917204897-fie2084hqjqgn8jr0ctnv3k9io4fqnld.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBY0dbfByzXZli2ddVDEQhdVob2vYu5HBM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "647917204897-fie2084hqjqgn8jr0ctnv3k9io4fqnld.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

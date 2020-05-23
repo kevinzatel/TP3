@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 public class Banda extends User {
+
     private boolean busquedaActiva;
     private String[] tipoBusqueda;
 
@@ -23,4 +24,5 @@ public class Banda extends User {
     public void setTipoBusqueda(String[] tipoBusqueda) {
         this.tipoBusqueda = tipoBusqueda;
     }
+
 }

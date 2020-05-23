@@ -1,82 +1,109 @@
 package com.example.myapplication;
 
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+import java.util.List;
 
-import androidx.annotation.Nullable;
+public class DataBaseHelper {
 
-public class DataBaseHelper extends SQLiteOpenHelper {
-    public static final String DATABASE_NAME="MyApp.db";
-    public static final String USERS_TABLE_NAME="user_table";
-    public static final String COLUMN_ID="ID";
-    public static final String COLUMN_USERNAME="USERNAME";
-    public static final String COLUMN_PASSWORD="PASSWORD";
-    public static final String COLUMN_INSTRUMENT="INSTRUMENT";
-    public static final String COLUMN_ISBAND="ISBAND";
-    public static final String COLUMN_DESCRIPTION="DESCRIPTION";
+    public FirebaseFirestore db;
+    public CollectionReference users;
+    public static final String USERS_COLLECTION_NAME = "users";
+    public static final String DB_ERROR_MSG = "Ocurrió un error al obtener los datos";
+    public static final String DB_USERS_EMPTY_RESULT = "No se encontraron usuarios";
 
-    public DataBaseHelper(@Nullable Context context) {
-        super(context, DATABASE_NAME, null, 1);
+
+    public DataBaseHelper() {
+
+        db = FirebaseFirestore.getInstance();
+        setCollections();
+
     }
 
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table " + USERS_TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, USERNAME TEXT NOT NULL, PASSWORD TEXT NOT NULL, INSTRUMENT TEXT, ISBAND INTEGER NOT NULL CHECK (ISBAND IN (0,1)), DESCRIPTION TEXT NOT NULL)");
+
+    private void setCollections(){
+
+        users = db.collection(USERS_COLLECTION_NAME);
+
     }
 
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + USERS_TABLE_NAME);
-        onCreate(db);
-    }
 
-    public boolean insertUser(String userName, String password, String instrument, int isBand, String description){
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_USERNAME, userName);
-        contentValues.put(COLUMN_PASSWORD, password);
-        contentValues.put(COLUMN_INSTRUMENT, instrument);
-        contentValues.put(COLUMN_ISBAND, isBand);
-        contentValues.put(COLUMN_DESCRIPTION, description);
-        long result = db.insert(USERS_TABLE_NAME, null, contentValues);
-        if(result == -1)
-            return false;
-        else
+    public boolean insertUser(String userName, String password, String instrument, int isBand, String description) {
+
+        boolean bandFlag = isBand == 1 ? true : false;
+        User user = new User(userName, password, instrument, bandFlag);
+        Task<DocumentReference> task = users.add(user);
+
+        while (!task.isComplete()){}
+
+        if(task.isSuccessful())
             return true;
+        else
+            return false;
+
     }
+
 
     public String getUsers() {
-        StringBuffer buffer = new StringBuffer();
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor result = db.rawQuery("select * from " + USERS_TABLE_NAME, null);
 
-        while (result.moveToNext()) {
-            buffer.append("ID: " + result.getString(0) + "\n");
-            buffer.append("USERNAME: " + result.getString(1) + "\n");
-            buffer.append("PASSWORD: " + result.getString(2) + "\n");
-            buffer.append("INSTRUMENT: " + result.getString(3) + "\n");
-            buffer.append("ISBAND: " + result.getString(4) + "\n");
+        String usersList = null;
+        Task<QuerySnapshot> task = users.get();
+
+        while (!task.isComplete()) {}
+
+        if (task.isSuccessful()) {
+            QuerySnapshot queryDocumentSnapshots = task.getResult();
+            if (queryDocumentSnapshots.isEmpty()) {
+                return DB_USERS_EMPTY_RESULT;
+            } else {
+                List<DocumentSnapshot> userList = queryDocumentSnapshots.getDocuments();
+                StringBuffer buffer = new StringBuffer();
+
+                for (DocumentSnapshot u : userList) {
+                    User user = u.toObject(User.class);
+                    buffer.append("USERNAME: " + user.getUserName() + "\n");
+                    buffer.append("PASSWORD: " + user.getPassword() + "\n");
+                    buffer.append("INSTRUMENT: " + user.getInstrument() + "\n");
+                    String isBand = user.isBand() ? "SI" : "NO";
+                    buffer.append("IS BAND?: " + isBand + "\n");
+                    usersList = buffer.toString();
+                }
+                return usersList;
+            }
+        } else {
+            return DB_ERROR_MSG;
         }
-
-        return buffer.toString();
+        
     }
 
+
     public User getUser(String username){
-        StringBuffer buffer = new StringBuffer();
-        SQLiteDatabase db = this.getWritableDatabase();
+
         User user = null;
-        Cursor result = db.rawQuery("select * from " + USERS_TABLE_NAME + " where " + COLUMN_USERNAME + " like '" + username +"'", null);
-        if(result.getCount() > 0){
-            result.moveToNext();
-            String userName = result.getString(1);
-            String password = result.getString(2);
-            String instrument = result.getString(3);
-            boolean isBand = result.getInt(4) == 1 ? true : false;
-            user = new User(userName, password, instrument, isBand);
+        Task<QuerySnapshot> task = users.get();
+
+        while (!task.isComplete()) {}
+
+        if (task.isSuccessful()) {
+            QuerySnapshot queryDocumentSnapshots = task.getResult();
+            if (!queryDocumentSnapshots.isEmpty()) {
+
+                List<DocumentSnapshot> userList = queryDocumentSnapshots.getDocuments();
+
+                for(DocumentSnapshot u : userList){
+                    User readedUser = u.toObject(User.class);
+                    if (readedUser.getUserName().equals(username)){
+                        user = readedUser;
+                        break;
+                    }
+                }
+            }
         }
         return user;
     }
+
 }

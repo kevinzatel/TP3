@@ -15,6 +15,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SignUpActivity extends AppCompatActivity {
+
     DataBaseHelper db;
     EditText userNameTxt, passwordTxt, confirmPasswordTxt, descripcionTxt;
     Button signUpBtn;
@@ -23,9 +24,10 @@ public class SignUpActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-        db = new DataBaseHelper(this);
+        db = new DataBaseHelper();
 
         userNameTxt = (EditText) findViewById(R.id.userNameTxt);
         passwordTxt = (EditText) findViewById(R.id.passwordTxt);
@@ -35,9 +37,11 @@ public class SignUpActivity extends AppCompatActivity {
 
         fillDropDowns();
         AddUser();
+
     }
 
     public void AddUser(){
+
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,6 +69,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void fillDropDowns(){
+
         final Spinner tipoDropDown, instrumentoDropDown, turnoDropDown;
         String[] tipoItems, instrumentoItems, turnoItems;
         ArrayAdapter<String> tipoAdapter, instrumentoAdapter, turnoAdapter;
@@ -140,6 +145,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private boolean isUserFormValid(String userName, String password, String confirmPassword, String descripcion){
+
         Boolean isValid = true;
 
         if(userName.isEmpty()){

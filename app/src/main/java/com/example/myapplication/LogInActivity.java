@@ -10,23 +10,32 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public class LogInActivity extends AppCompatActivity {
-    DataBaseHelper db;
+
+    private DataBaseHelper db;
+    private Button signInBtn;
+    private TextView signUpLink;
+    private EditText userNameTxt;
+    private EditText passwordTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        db = new DataBaseHelper(this);
+        db = new DataBaseHelper();
 
-        Button signInBtn = (Button) findViewById(R.id.signInBtn);
-        TextView signUpLink = (TextView) findViewById(R.id.signUpLink);
+        signInBtn = (Button) findViewById(R.id.signInBtn);
+        signUpLink = (TextView) findViewById(R.id.signUpLink);
 
         signInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText userNameTxt = (EditText) findViewById(R.id.userNameTxt);
-                EditText passwordTxt = (EditText) findViewById(R.id.passwordTxt);
+
+                userNameTxt = (EditText) findViewById(R.id.userNameTxt);
+                passwordTxt = (EditText) findViewById(R.id.passwordTxt);
 
                 String userName = userNameTxt.getText().toString();
                 String password = passwordTxt.getText().toString();
@@ -35,7 +44,7 @@ public class LogInActivity extends AppCompatActivity {
 
                 if(user != null && userName.equals(user.getUserName()) && password.equals(user.getPassword())){
                     Intent landingIntent;
-                    if(user.getIsBand()){
+                    if(user.isBand()){
                         landingIntent = new Intent(getApplicationContext(), BandLandingPageActivity.class);
                         landingIntent.putExtra("user", user);
                     }
