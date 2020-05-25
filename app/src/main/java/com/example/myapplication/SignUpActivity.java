@@ -19,7 +19,7 @@ public class SignUpActivity extends AppCompatActivity {
     DataBaseHelper db;
     EditText userNameTxt, passwordTxt, confirmPasswordTxt, descripcionTxt;
     Button signUpBtn;
-    String type, instrument, turno;
+    String type, instrument, timeOfDay;
     int isBand;
 
     @Override
@@ -36,11 +36,11 @@ public class SignUpActivity extends AppCompatActivity {
         signUpBtn = (Button) findViewById(R.id.signUpBtn);
 
         fillDropDowns();
-        AddUser();
+        addUser();
 
     }
 
-    public void AddUser(){
+    public void addUser(){
 
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,7 +51,7 @@ public class SignUpActivity extends AppCompatActivity {
                 String confirmPassword = confirmPasswordTxt.getText().toString();
                 String description = descripcionTxt.getText().toString();
                 if(isUserFormValid(userName, password, confirmPassword, description)){
-                        isAdded = db.insertUser(userName, password, instrument, isBand, description);
+                        isAdded = db.insertUser(userName, password, instrument, isBand, timeOfDay, description);
                         if(isAdded) {
                             Toast.makeText(SignUpActivity.this, "Created Successfully", Toast.LENGTH_LONG).show();
                             Intent loginIntent = new Intent(getApplicationContext(), LogInActivity.class);
@@ -78,7 +78,6 @@ public class SignUpActivity extends AppCompatActivity {
         tipoDropDown = findViewById(R.id.tipoDropDown);
         tipoItems = getResources().getStringArray(R.array.tipo);
         tipoAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, tipoItems);
-
 
         turnoDropDown = findViewById(R.id.turnoDropDown);
         turnoItems = getResources().getStringArray(R.array.turnos);
@@ -119,7 +118,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
-                turno = (String) parent.getItemAtPosition(position);
+                timeOfDay = (String) parent.getItemAtPosition(position);
             }
 
             @Override
@@ -175,6 +174,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     public void ShowUsers(){
+
         String users = db.getUsers();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(users);

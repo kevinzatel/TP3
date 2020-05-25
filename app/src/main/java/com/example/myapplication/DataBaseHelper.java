@@ -32,10 +32,10 @@ public class DataBaseHelper {
     }
 
 
-    public boolean insertUser(String userName, String password, String instrument, int isBand, String description) {
+    public boolean insertUser(String userName, String password, String instrument, int isBand, String timeOfDay, String description) {
 
         boolean bandFlag = isBand == 1 ? true : false;
-        User user = new User(userName, password, instrument, bandFlag);
+        User user = new User(userName, password, description, instrument, timeOfDay, bandFlag);
         Task<DocumentReference> task = users.add(user);
 
         while (!task.isComplete()){}

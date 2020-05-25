@@ -6,7 +6,7 @@ public class Banda extends User {
     private String[] tipoBusqueda;
 
     public Banda(String userName, String password, String instrument, boolean isBand) {
-        super(userName, password, instrument, isBand);
+        super(userName, password, null, instrument, null, isBand);
     }
 
     public boolean isBusquedaActiva() {
