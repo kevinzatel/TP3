@@ -4,7 +4,7 @@ public class Musico extends User {
     private String instrument;
 
     public Musico(String userName, String password, String instrument, boolean isBand) {
-        super(userName, password, null, instrument, null, isBand);
+        super(userName, password, null, instrument, null, isBand, null);
     }
 
     public String getInstrument() {

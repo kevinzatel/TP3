@@ -6,6 +6,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class DataBaseHelper {
@@ -35,8 +37,10 @@ public class DataBaseHelper {
     public boolean insertUser(String userName, String password, String instrument, int isBand, String timeOfDay, String description) {
 
         boolean bandFlag = isBand == 1 ? true : false;
-        User user = new User(userName, password, description, instrument, timeOfDay, bandFlag);
+        ArrayList<String> musicianSearching = new ArrayList<String>();
+        User user = new User(userName, password, description, instrument, timeOfDay, bandFlag, musicianSearching);
         Task<DocumentReference> task = users.add(user);
+        Task<Void> task1 = users.document(user.getUserName()).set(user);
 
         while (!task.isComplete()){}
 
@@ -45,6 +49,10 @@ public class DataBaseHelper {
         else
             return false;
 
+    }
+
+    public void activateMusicianSearch(User user, ArrayList<String> selectedMusicians){
+        users.document(user.getUserName()).update("musicianSearching", selectedMusicians);
     }
 
 
