@@ -20,27 +20,20 @@ public class DataBaseHelper {
 
 
     public DataBaseHelper() {
-
         db = FirebaseFirestore.getInstance();
         setCollections();
-
     }
 
 
     private void setCollections(){
-
         users = db.collection(USERS_COLLECTION_NAME);
-
     }
 
 
     public boolean insertUser(String userName, String password, String instrument, int isBand, String timeOfDay, String description) {
-
         boolean bandFlag = isBand == 1 ? true : false;
-        ArrayList<String> musicianSearching = new ArrayList<String>();
-        User user = new User(userName, password, description, instrument, timeOfDay, bandFlag, musicianSearching);
-        Task<DocumentReference> task = users.add(user);
-        Task<Void> task1 = users.document(user.getUserName()).set(user);
+        User user = new User(userName, password, description, instrument, timeOfDay, bandFlag, null);
+        Task<Void> task = users.document(user.getUserName()).set(user);
 
         while (!task.isComplete()){}
 
@@ -53,6 +46,10 @@ public class DataBaseHelper {
 
     public void activateMusicianSearch(User user, ArrayList<String> selectedMusicians){
         users.document(user.getUserName()).update("musicianSearching", selectedMusicians);
+    }
+
+    public void desactivateMusicianSearch(User user){
+        users.document(user.getUserName()).update("musicianSearching", null);
     }
 
 
