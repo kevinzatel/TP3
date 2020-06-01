@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,14 +30,31 @@ public class MusicianEditProfileActivity extends AppCompatActivity {
 
         msNombre.setText(user.getUserName());
         msInstrumento.setText(user.getInstrument());
-        //msPassword.setText(user.getPassword());
+        msPassword.setText(user.getPassword());
+
+
 
         /*METODO PARA ACTUALIZAR*/
 
         saveChanges.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+               /*validar vacios*/
+            if(msNombre.toString().equals("") | msPassword.toString().equals("") | msInstrumento.toString().equals("")) {
+                Toast.makeText(MusicianEditProfileActivity.this, "Todos los campos deben estar completos.", Toast.LENGTH_LONG).show();
+            }
+                else{
+                        try {
+                             db.editMusicianProfile(user,msNombre,msInstrumento,msPassword);
+                            Toast.makeText(MusicianEditProfileActivity.this, "Cambios realizados.", Toast.LENGTH_LONG).show();
+                        }
+                        catch (Exception e){
+                            Toast.makeText(MusicianEditProfileActivity.this, "Error en conexión con base de datos.", Toast.LENGTH_LONG).show();
+                        }
 
+
+
+                    }
             }
         });
 
