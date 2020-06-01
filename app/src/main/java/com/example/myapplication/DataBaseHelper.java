@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import android.widget.EditText;
+
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -47,6 +49,13 @@ public class DataBaseHelper {
     public void activateMusicianSearch(User user, ArrayList<String> selectedMusicians){
         users.document(user.getUserName()).update("musicianSearching", selectedMusicians);
     }
+
+    public void editMusicianProfile(User user, EditText instrumento, EditText nombre, EditText password) {
+        users.document(user.getUserName()).update("userName",nombre,"instrument",instrumento,"password",password);
+
+    }
+
+
 
     public void desactivateMusicianSearch(User user){
         users.document(user.getUserName()).update("musicianSearching", null);
