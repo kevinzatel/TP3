@@ -24,6 +24,7 @@ public class DataBaseHelper {
         db = FirebaseFirestore.getInstance();
         setCollections();
 
+
     }
 
 
@@ -53,7 +54,10 @@ public class DataBaseHelper {
 
     public void activateMusicianSearch(User user, ArrayList<String> selectedMusicians){
         users.document(user.getUserName()).update("musicianSearching", selectedMusicians);
+
     }
+
+
 
 
     public String getUsers() {
