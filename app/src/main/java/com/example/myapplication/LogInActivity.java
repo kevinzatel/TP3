@@ -55,7 +55,7 @@ public class LogInActivity extends AppCompatActivity {
                     startActivity(landingIntent);
                 }
                 else{
-                    Toast.makeText(LogInActivity.this, "Log In Denied", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LogInActivity.this, "Los datos que ingresaste son incorrectos", Toast.LENGTH_LONG).show();
                 }
             }
         });

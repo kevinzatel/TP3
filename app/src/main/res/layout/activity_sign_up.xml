@@ -10,20 +10,25 @@
         android:id="@+id/queSosTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="84dp"
-        android:layout_marginLeft="84dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="173dp"
+        android:layout_marginLeft="173dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="156dp"
+        android:layout_marginRight="156dp"
         android:text="¿Qué sos?"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/confirmPasswordTxt" />
 
     <EditText
         android:id="@+id/confirmPasswordTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="25dp"
         android:ems="10"
-        android:hint="Confirmar constraseña"
+        android:gravity="center"
+        android:hint="Confirmá tu contraseña"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.525"
@@ -34,12 +39,13 @@
         android:id="@+id/userNameTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="112dp"
+        android:layout_marginTop="130dp"
         android:ems="10"
-        android:hint="Usuario"
+        android:gravity="center"
+        android:hint="Ingresá tu email"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.525"
+        app:layout_constraintHorizontal_bias="0.527"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -47,21 +53,23 @@
         android:id="@+id/signUpBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sign Up"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="45dp"
+        android:text="Continuar"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.517"
+        app:layout_constraintHorizontal_bias="0.535"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descriptionTxt"
-        app:layout_constraintVertical_bias="0.197" />
+        app:layout_constraintTop_toBottomOf="@+id/tipoDropDown" />
 
     <EditText
         android:id="@+id/passwordTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="25dp"
         android:ems="10"
-        android:hint="Contraseña"
+        android:gravity="center"
+        android:hint="Ingresá una contraseña"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.525"
@@ -69,69 +77,33 @@
         app:layout_constraintTop_toBottomOf="@+id/userNameTxt" />
 
     <Spinner
-        android:id="@+id/instrumentoDropDown"
-        android:layout_width="151dp"
-        android:layout_height="27dp"
-        android:layout_marginTop="20dp"
+        android:id="@+id/tipoDropDown"
+        android:layout_width="212dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="138dp"
+        android:layout_marginLeft="138dp"
+        android:layout_marginTop="23dp"
+        android:layout_marginEnd="118dp"
+        android:layout_marginRight="118dp"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.344"
-        app:layout_constraintStart_toEndOf="@+id/instrumentoTxt"
-        app:layout_constraintTop_toBottomOf="@+id/tipoDropDown" />
-
-    <TextView
-        android:id="@+id/instrumentoTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginLeft="36dp"
-        android:layout_marginTop="28dp"
-        android:text="Elegí tu instrumento:"
+        app:layout_constraintHorizontal_bias="0.684"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/queSosTxt" />
 
-    <Spinner
-        android:id="@+id/tipoDropDown"
-        android:layout_width="151dp"
-        android:layout_height="27dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.455"
-        app:layout_constraintStart_toEndOf="@+id/queSosTxt"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
-        android:id="@+id/turnoTxt"
-        android:layout_width="52dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="32dp"
-        android:text="Turno: "
+        android:id="@+id/creaTuCuentaTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="176dp"
+        android:layout_marginLeft="176dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="177dp"
+        android:layout_marginRight="177dp"
+        android:text="Creá tu Cuenta"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.233"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/confirmPasswordTxt" />
-
-    <Spinner
-        android:id="@+id/turnoDropDown"
-        android:layout_width="131dp"
-        android:layout_height="22dp"
-        android:layout_marginTop="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.215"
-        app:layout_constraintStart_toEndOf="@+id/turnoTxt"
-        app:layout_constraintTop_toBottomOf="@+id/confirmPasswordTxt" />
-
-    <EditText
-        android:id="@+id/descriptionTxt"
-        android:layout_width="290dp"
-        android:layout_height="120dp"
-        android:layout_marginTop="24dp"
-        android:ems="10"
-        android:hint="Descripcion"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/turnoDropDown"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
