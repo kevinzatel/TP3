@@ -1,17 +1,24 @@
 package com.example.myapplication;
 
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MusicianEditProfileActivity extends AppCompatActivity {
     DataBaseHelper db;
     EditText msNombre,msInstrumento,msPassword;
-    Button saveChanges,back;
+    Spinner spInstrumento;
+    Button saveChanges,btBack;
     String userId;
 
     @Override
@@ -23,13 +30,22 @@ public class MusicianEditProfileActivity extends AppCompatActivity {
 
         final User user = (User) getIntent().getSerializableExtra("user");
          msNombre  = (EditText) findViewById(R.id.msEditNombre);
-         msInstrumento = (EditText) findViewById(R.id.msEditInstrumento);
+         //msInstrumento = (EditText) findViewById(R.id.msEditInstrumento);
+         spInstrumento = (Spinner) findViewById(R.id.instrumentoSpinner);
          msPassword = (EditText) findViewById(R.id.msEditPassword);
          saveChanges = (Button) findViewById(R.id.btSaveChanges);
-         back = (Button) findViewById(R.id.btBack);
+         btBack = (Button) findViewById(R.id.btBack);
 
-        msNombre.setText(user.getUserName());
-        msInstrumento.setText(user.getInstrument());
+        String userInstrument = user.getInstrument();
+        ArrayAdapter<CharSequence> adapterInstrument = ArrayAdapter.createFromResource(this, R.array.instrumentos, android.R.layout.simple_spinner_item);
+        adapterInstrument.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spInstrumento.setAdapter(adapterInstrument);
+        if (userInstrument != null) {
+            int spinnerPosition = adapterInstrument.getPosition(userInstrument);
+            spInstrumento.setSelection(spinnerPosition);
+        }
+         msNombre.setText(user.getUserName());
+//      spInstrumento.setText(user.getInstrument());
         msPassword.setText(user.getPassword());
 
 
@@ -37,18 +53,25 @@ public class MusicianEditProfileActivity extends AppCompatActivity {
         /*METODO PARA ACTUALIZAR*/
 
         saveChanges.setOnClickListener(new View.OnClickListener() {
+            private static final String TAG ="a" ;
+
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
                /*validar vacios*/
-            if(msNombre.toString().equals("") | msPassword.toString().equals("") | msInstrumento.toString().equals("")) {
+            if(msNombre.getText().toString().equals("") | msPassword.getText().toString().equals("")) {
                 Toast.makeText(MusicianEditProfileActivity.this, "Todos los campos deben estar completos.", Toast.LENGTH_LONG).show();
             }
                 else{
                         try {
-                             db.editMusicianProfile(user,msNombre,msInstrumento,msPassword);
-                            Toast.makeText(MusicianEditProfileActivity.this, "Cambios realizados.", Toast.LENGTH_LONG).show();
+
+                            //db.editMusicianProfile(user,msNombre.getText().toString(),msInstrumento.getText().toString(),msPassword.getText().toString());
+                            db.editMusicianProfile(user,msNombre.getText().toString(),spInstrumento.getSelectedItem().toString(),msPassword.getText().toString());
+                            Toast.makeText(MusicianEditProfileActivity.this, "Cambios realizadosss.", Toast.LENGTH_LONG).show();
+
                         }
                         catch (Exception e){
+
                             Toast.makeText(MusicianEditProfileActivity.this, "Error en conexión con base de datos.", Toast.LENGTH_LONG).show();
                         }
 
@@ -60,10 +83,18 @@ public class MusicianEditProfileActivity extends AppCompatActivity {
 
         /*VOLVER A ACTIVITY ANTERIOR*/
 
-        back.setOnClickListener(new View.OnClickListener() {
+        btBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                btBack.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //onBackPressed();
+                        Intent backIntent = new Intent(getApplicationContext(),MusicianProfileActivity.class);
+                        backIntent.putExtra("user",user);
+                        startActivity(backIntent);
+                    }
+                });
             }
         });
 

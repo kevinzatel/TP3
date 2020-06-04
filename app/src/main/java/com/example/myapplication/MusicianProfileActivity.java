@@ -22,7 +22,7 @@ public class MusicianProfileActivity extends AppCompatActivity {
          nombre =(TextView) findViewById(R.id.msNombre);
          instrumento = (TextView) findViewById(R.id.msInstrumento);
          btEditProfile = (Button) findViewById(R.id.btEditPerfil);
-         btBack = (Button) findViewById(R.id.btBack);
+         //btBack = (Button) findViewById(R.id.btBack);
 
         nombre.setText(user.getUserName());
         instrumento.setText(user.getInstrument());
@@ -37,17 +37,7 @@ public class MusicianProfileActivity extends AppCompatActivity {
             }
         });
 
-        btBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btBack.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onBackPressed();
-                    }
-                });
-            }
-        });
+
 
 
     }
