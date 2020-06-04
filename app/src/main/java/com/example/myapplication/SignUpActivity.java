@@ -17,9 +17,9 @@ import androidx.appcompat.app.AppCompatActivity;
 public class SignUpActivity extends AppCompatActivity {
 
     DataBaseHelper db;
-    EditText userNameTxt, passwordTxt, confirmPasswordTxt, descripcionTxt;
+    String type;
+    EditText userNameTxt, passwordTxt, confirmPasswordTxt;
     Button signUpBtn;
-    String type, instrument, timeOfDay;
     int isBand;
 
     @Override
@@ -32,7 +32,6 @@ public class SignUpActivity extends AppCompatActivity {
         userNameTxt = (EditText) findViewById(R.id.userNameTxt);
         passwordTxt = (EditText) findViewById(R.id.passwordTxt);
         confirmPasswordTxt = (EditText) findViewById(R.id.confirmPasswordTxt);
-        descripcionTxt = (EditText) findViewById(R.id.descriptionTxt);
         signUpBtn = (Button) findViewById(R.id.signUpBtn);
 
         fillDropDowns();
@@ -49,16 +48,23 @@ public class SignUpActivity extends AppCompatActivity {
                 String userName = userNameTxt.getText().toString();
                 String password = passwordTxt.getText().toString();
                 String confirmPassword = confirmPasswordTxt.getText().toString();
-                String description = descripcionTxt.getText().toString();
-                if(isUserFormValid(userName, password, confirmPassword, description)){
-                        isAdded = db.insertUser(userName, password, instrument, isBand, timeOfDay, description);
+
+                if(isUserFormValid(userName, password, confirmPassword)){
+                        isAdded = db.insertUser(userName, password, isBand);
                         if(isAdded) {
-                            Toast.makeText(SignUpActivity.this, "Created Successfully", Toast.LENGTH_LONG).show();
-                            Intent loginIntent = new Intent(getApplicationContext(), LogInActivity.class);
-                            startActivity(loginIntent);
+                            Intent firstTimeIntent;
+                            if(isBand()){
+                                firstTimeIntent = new Intent(getApplicationContext(), BandFirstTimeActivity.class);
+                            }
+                            else {
+                                firstTimeIntent = new Intent(getApplicationContext(), MusicianFirstTimeActivity.class);
+                            }
+                            firstTimeIntent.putExtra("userName", userName);
+                            startActivity(firstTimeIntent);
                         }
-                        else
-                            Toast.makeText(SignUpActivity.this, "Error", Toast.LENGTH_LONG).show();
+                        else {
+                            Toast.makeText(SignUpActivity.this, "Ocurrió un error interno. Por favor, intentá nuevamente", Toast.LENGTH_LONG).show();
+                        }
                 }
             }
         });
@@ -70,23 +76,13 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void fillDropDowns(){
 
-        final Spinner tipoDropDown, instrumentoDropDown, turnoDropDown;
-        String[] tipoItems, instrumentoItems, turnoItems;
-        ArrayAdapter<String> tipoAdapter, instrumentoAdapter, turnoAdapter;
-        final TextView instrumentoTxt;
+        final Spinner tipoDropDown;
+        String [] tipoItems;
+        ArrayAdapter<String> tipoAdapter;
 
         tipoDropDown = findViewById(R.id.tipoDropDown);
         tipoItems = getResources().getStringArray(R.array.tipo);
         tipoAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, tipoItems);
-
-        turnoDropDown = findViewById(R.id.turnoDropDown);
-        turnoItems = getResources().getStringArray(R.array.turnos);
-        turnoAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, turnoItems);
-
-        instrumentoTxt = findViewById(R.id.instrumentoTxt);
-        instrumentoDropDown = findViewById(R.id.instrumentoDropDown);
-        instrumentoItems = getResources().getStringArray(R.array.instrumentos);
-        instrumentoAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, instrumentoItems);
 
         tipoDropDown.setAdapter(tipoAdapter);
         tipoDropDown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -95,14 +91,9 @@ public class SignUpActivity extends AppCompatActivity {
                                                                               int position, long id) {
                                                        type = (String) parent.getItemAtPosition(position);
                                                        if(isBand()){
-                                                           instrumentoDropDown.setVisibility(View.GONE);
-                                                           instrumentoTxt.setVisibility(View.GONE);
-                                                           instrument = null;
                                                            isBand = 1;
                                                        }
                                                        else{
-                                                           instrumentoDropDown.setVisibility(View.VISIBLE);
-                                                           instrumentoTxt.setVisibility(View.VISIBLE);
                                                            isBand = 0;
                                                        }
                                                    }
@@ -112,72 +103,32 @@ public class SignUpActivity extends AppCompatActivity {
 
             }
         });
-
-        turnoDropDown.setAdapter(turnoAdapter);
-        turnoDropDown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view,
-                                       int position, long id) {
-                timeOfDay = (String) parent.getItemAtPosition(position);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-
-        instrumentoDropDown.setAdapter(instrumentoAdapter);
-        instrumentoDropDown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view,
-                                       int position, long id) {
-                instrument = (String) parent.getItemAtPosition(position);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
     }
 
-    private boolean isUserFormValid(String userName, String password, String confirmPassword, String descripcion){
+    private boolean isUserFormValid(String userName, String password, String confirmPassword){
 
         Boolean isValid = true;
 
         if(userName.isEmpty()){
-            userNameTxt.setError("Ingrese un usuario por favor.");
+            userNameTxt.setError("Por favor, ingresá tu email");
             isValid = false;
         } else if(db.getUser(userName) != null){
-            userNameTxt.setError("Este nombre de usuario ya existe. Ingrese otro por favor.");
+            userNameTxt.setError("Este usuario ya esta registrado. Ingresá otro");
             isValid = false;
         }
         if(password.isEmpty()){
-            passwordTxt.setError("Ingrese una contreseña por favor.");
+            passwordTxt.setError("Por favor, ingresá una contraseña valida");
             isValid = false;
         }
         if(confirmPassword.isEmpty()){
-            confirmPasswordTxt.setError("Confirme la contreseña por favor.");
+            confirmPasswordTxt.setError("Confirmá tu contraseña");
             isValid = false;
         }
         if(!password.equals(confirmPassword)){
-            confirmPasswordTxt.setError("Las contreseñas deben coincidir.");
-            isValid = false;
-        }
-        if(descripcion.isEmpty()){
-            descripcionTxt.setError("Ingrese una descripcion por favor.");
+            confirmPasswordTxt.setError("Las contreseñas tienen que ser iguales");
             isValid = false;
         }
         return isValid;
     }
 
-    public void ShowUsers(){
-
-        String users = db.getUsers();
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(users);
-        builder.show();
-    }
 }

@@ -1,7 +1,6 @@
 package com.example.myapplication;
 
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -51,12 +50,8 @@ public class DataBaseHelper {
         users.document(user.getUserName()).update("musicianSearching", selectedMusicians);
     }
 
-//    public void editMusicianProfile(User user, EditText instrumento, EditText nombre, EditText password) {
-
-
-        public void editMusicianProfile(User user, String nombre, String instrumento, String password) {
+    public void editMusicianProfile(User user, EditText instrumento, EditText nombre, EditText password) {
         users.document(user.getUserName()).update("userName",nombre,"instrument",instrumento,"password",password);
-
 
     }
 
