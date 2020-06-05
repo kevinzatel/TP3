@@ -21,6 +21,7 @@
         <item>Flores</item>
         <item>Floresta</item>
         <item>Caballito</item>
+		<item>Mataderos</item>
     </string-array>
     <string-array name="pais_busqueda">
         <item>Argentina</item>
