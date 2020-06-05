@@ -22,4 +22,13 @@
         <item>Floresta</item>
         <item>Caballito</item>
     </string-array>
+    <string-array name="pais_busqueda">
+        <item>Argentina</item>
+    </string-array>
+    <string-array name="provincia_busqueda">
+        <item>Buenos Aires</item>
+    </string-array>
+    <string-array name="ciudad_busqueda">
+        <item>Buenos Aires</item>
+    </string-array>
 </resources>
