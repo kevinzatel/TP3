@@ -1,12 +1,15 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class LogInActivity extends AppCompatActivity {
@@ -16,6 +19,7 @@ public class LogInActivity extends AppCompatActivity {
     private TextView signUpLink;
     private EditText userNameTxt;
     private EditText passwordTxt;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +30,9 @@ public class LogInActivity extends AppCompatActivity {
 
         signInBtn = (Button) findViewById(R.id.signInBtn);
         signUpLink = (TextView) findViewById(R.id.signUpLink);
+        progressBar = (ProgressBar) findViewById(R.id.progressBarMain);
+
+        progressBar.setVisibility(View.GONE);
 
         signInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,40 +46,10 @@ public class LogInActivity extends AppCompatActivity {
 
                 if (isUserFormValid(userName, password)){
 
-                    User user = db.getUser(userName);
-
-                    if(user == null){
-                        Toast.makeText(LogInActivity.this, "La cuenta que ingresaste no existe. Creala", Toast.LENGTH_LONG).show();
-                        Intent signUpintent;
-                        signUpintent = new Intent(getApplicationContext(), SignUpActivity.class);
-                        startActivity(signUpintent);
-                    }
-                    else if(!user.isActive()){
-                        Toast.makeText(LogInActivity.this, "Todavia no activaste tu cuenta. Activala", Toast.LENGTH_LONG).show();
-                        Intent activateIntent;
-                        if(user.isBand()){
-                            activateIntent = new Intent(getApplicationContext(), BandFirstTimeActivity.class);
-                        }
-                        else {
-                            activateIntent = new Intent(getApplicationContext(), MusicianFirstTimeActivity.class);
-                        }
-                        activateIntent.putExtra("userName", userName);
-                        startActivity(activateIntent);
-                    } else if(userName.equals(user.getUserName()) && password.equals(user.getPassword())){
-                        Intent landingIntent;
-                        if(user.isBand()){
-                            landingIntent = new Intent(getApplicationContext(), BandLandingPageActivity.class);
-                            landingIntent.putExtra("user", user);
-                        }
-                        else{
-                            landingIntent = new Intent(getApplicationContext(), MusicianLandingActivity.class);
-                            landingIntent.putExtra("userName", userName);
-                        }
-                        startActivity(landingIntent);
-                    }
-                    else{
-                        Toast.makeText(LogInActivity.this, "Los datos que ingresaste son incorrectos", Toast.LENGTH_LONG).show();
-                    }
+                    SignUpProcess signUpAsyncTask = new SignUpProcess();
+                    String [] params = { userName, password};
+                    signUpAsyncTask.execute(params);
+                    
                 }
             }
         });
@@ -84,6 +61,71 @@ public class LogInActivity extends AppCompatActivity {
                 startActivity(signUpIntent);
             }
         });
+    }
+
+    private class SignUpProcess extends AsyncTask<String, Void, User> {
+
+        private String userName;
+        private String password;
+
+        @Override
+        protected void onPreExecute() {
+            progressBar.setVisibility(View.VISIBLE);
+            signInBtn.setEnabled(false);
+            signUpLink.setEnabled(false);
+        }
+
+        @Override
+        protected User doInBackground(String... params) {
+
+            this.userName = params[0];
+            this.password = params[1];
+
+            User user = db.getUser(this.userName);
+
+            return user;
+        }
+
+        @Override
+        protected void onPostExecute(User user) {
+
+            progressBar.setVisibility(View.GONE);
+            signInBtn.setEnabled(true);
+            signUpLink.setEnabled(true);
+
+            if(user == null){
+                Toast.makeText(LogInActivity.this, "La cuenta que ingresaste no existe. Creala", Toast.LENGTH_LONG).show();
+                Intent signUpintent;
+                signUpintent = new Intent(getApplicationContext(), SignUpActivity.class);
+                startActivity(signUpintent);
+            }
+            else if(!user.isActive()){
+                Toast.makeText(LogInActivity.this, "Todavia no activaste tu cuenta. Activala", Toast.LENGTH_LONG).show();
+                Intent activateIntent;
+                if(user.isBand()){
+                    activateIntent = new Intent(getApplicationContext(), BandFirstTimeActivity.class);
+                }
+                else {
+                    activateIntent = new Intent(getApplicationContext(), MusicianFirstTimeActivity.class);
+                }
+                activateIntent.putExtra("userName", this.userName);
+                startActivity(activateIntent);
+            } else if(this.userName.equals(user.getUserName()) && this.password.equals(user.getPassword())){
+                Intent landingIntent;
+                if(user.isBand()){
+                    landingIntent = new Intent(getApplicationContext(), BandLandingPageActivity.class);
+                    landingIntent.putExtra("user", user);
+                }
+                else{
+                    landingIntent = new Intent(getApplicationContext(), MusicianLandingActivity.class);
+                    landingIntent.putExtra("userName", this.userName);
+                }
+                startActivity(landingIntent);
+            }
+            else {
+                Toast.makeText(LogInActivity.this, "Los datos que ingresaste son incorrectos", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     private boolean isUserFormValid(String userName, String password){
