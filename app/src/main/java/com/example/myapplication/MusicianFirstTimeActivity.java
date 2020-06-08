@@ -61,14 +61,20 @@ public class MusicianFirstTimeActivity extends AppCompatActivity {
         if(nickname.isEmpty()){
             nicknameTxt.setError("Por favor, ingresá tu nombre");
             isValid = false;
+        } else {
+            nicknameTxt.setError(null);
         }
         if(phone.isEmpty()){
             phoneTxt.setError("Por favor, ingresá una número de contacto");
             isValid = false;
-        }
-        if(!isNumeric(phone)){
+        } else if(!isNumeric(phone)){
             phoneTxt.setError("Por favor, ingresá una número valido");
             isValid = false;
+        } else if(!(phone.length() == 8)){
+            phoneTxt.setError("Por favor, ingresá una número de 8 dígitos");
+            isValid = false;
+        } else {
+            phoneTxt.setError(null);
         }
         return isValid;
     }

@@ -51,9 +51,9 @@ public class DataBaseHelper {
             return false;
     }
 
-    public boolean activateBand(String userName, String nickname, String phone, String timeOfDay, String district, String adress){
+    public boolean activateBand(String userName, String nickname, String phone, String timeOfDay, String district, String latitude, String longitude){
 
-        Task<Void> task = users.document(userName).update("nickname", nickname, "phone", phone, "timeOfDay", timeOfDay, "district", district, "adress", adress, "active", true);
+        Task<Void> task = users.document(userName).update("nickname", nickname, "phone", phone, "timeOfDay", timeOfDay, "district", district, "latitude", latitude, "longitude", longitude, "active", true);
 
         while (!task.isComplete()){}
 

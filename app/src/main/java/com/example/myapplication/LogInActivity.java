@@ -7,10 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LogInActivity extends AppCompatActivity {
 
@@ -40,22 +37,42 @@ public class LogInActivity extends AppCompatActivity {
                 String userName = userNameTxt.getText().toString();
                 String password = passwordTxt.getText().toString();
 
-                User user = db.getUser(userName);
+                if (isUserFormValid(userName, password)){
 
-                if(user != null && userName.equals(user.getUserName()) && password.equals(user.getPassword())){
-                    Intent landingIntent;
-                    if(user.isBand()){
-                        landingIntent = new Intent(getApplicationContext(), BandLandingPageActivity.class);
-                        landingIntent.putExtra("user", user);
+                    User user = db.getUser(userName);
+
+                    if(user == null){
+                        Toast.makeText(LogInActivity.this, "La cuenta que ingresaste no existe. Creala", Toast.LENGTH_LONG).show();
+                        Intent signUpintent;
+                        signUpintent = new Intent(getApplicationContext(), SignUpActivity.class);
+                        startActivity(signUpintent);
+                    }
+                    else if(!user.isActive()){
+                        Toast.makeText(LogInActivity.this, "Todavia no activaste tu cuenta. Activala", Toast.LENGTH_LONG).show();
+                        Intent activateIntent;
+                        if(user.isBand()){
+                            activateIntent = new Intent(getApplicationContext(), BandFirstTimeActivity.class);
+                        }
+                        else {
+                            activateIntent = new Intent(getApplicationContext(), MusicianFirstTimeActivity.class);
+                        }
+                        activateIntent.putExtra("userName", userName);
+                        startActivity(activateIntent);
+                    } else if(userName.equals(user.getUserName()) && password.equals(user.getPassword())){
+                        Intent landingIntent;
+                        if(user.isBand()){
+                            landingIntent = new Intent(getApplicationContext(), BandLandingPageActivity.class);
+                            landingIntent.putExtra("user", user);
+                        }
+                        else{
+                            landingIntent = new Intent(getApplicationContext(), MusicianLandingActivity.class);
+                            landingIntent.putExtra("userName", userName);
+                        }
+                        startActivity(landingIntent);
                     }
                     else{
-                        landingIntent = new Intent(getApplicationContext(), MusicianLandingActivity.class);
-                        landingIntent.putExtra("userName", userName);
+                        Toast.makeText(LogInActivity.this, "Los datos que ingresaste son incorrectos", Toast.LENGTH_LONG).show();
                     }
-                    startActivity(landingIntent);
-                }
-                else{
-                    Toast.makeText(LogInActivity.this, "Los datos que ingresaste son incorrectos", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -68,4 +85,29 @@ public class LogInActivity extends AppCompatActivity {
             }
         });
     }
+
+    private boolean isUserFormValid(String userName, String password){
+
+        Boolean isValid = true;
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+
+        if(userName.isEmpty()){
+            userNameTxt.setError("Por favor, ingresá tu email");
+            isValid = false;
+        } else if (!(userName.trim().matches(emailPattern))){
+            userNameTxt.setError("Por favor, ingresá una email valido");
+            isValid = false;
+        } else {
+            userNameTxt.setError(null);
+        }
+        if(password.isEmpty()){
+            passwordTxt.setError("Por favor, ingresá una contraseña valida");
+            isValid = false;
+        } else {
+            passwordTxt.setError(null);
+        }
+
+        return isValid;
+    }
+
 }

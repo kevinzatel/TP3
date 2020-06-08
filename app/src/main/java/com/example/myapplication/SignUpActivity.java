@@ -8,10 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -82,8 +79,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         tipoDropDown = findViewById(R.id.tipoDropDown);
         tipoItems = getResources().getStringArray(R.array.tipo);
-        tipoAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, tipoItems);
-
+        tipoAdapter = new ArrayAdapter<>(this, R.layout.spinner_layout, tipoItems);
         tipoDropDown.setAdapter(tipoAdapter);
         tipoDropDown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                                                    @Override
@@ -97,10 +93,8 @@ public class SignUpActivity extends AppCompatActivity {
                                                            isBand = 0;
                                                        }
                                                    }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
     }
@@ -108,25 +102,34 @@ public class SignUpActivity extends AppCompatActivity {
     private boolean isUserFormValid(String userName, String password, String confirmPassword){
 
         Boolean isValid = true;
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
         if(userName.isEmpty()){
             userNameTxt.setError("Por favor, ingresá tu email");
             isValid = false;
+        } else if (!(userName.trim().matches(emailPattern))){
+            userNameTxt.setError("Por favor, ingresá una email valido");
+            isValid = false;
         } else if(db.getUser(userName) != null){
             userNameTxt.setError("Este usuario ya esta registrado. Ingresá otro");
             isValid = false;
+        } else {
+            userNameTxt.setError(null);
         }
         if(password.isEmpty()){
             passwordTxt.setError("Por favor, ingresá una contraseña valida");
             isValid = false;
+        } else {
+            passwordTxt.setError(null);
         }
         if(confirmPassword.isEmpty()){
             confirmPasswordTxt.setError("Confirmá tu contraseña");
             isValid = false;
-        }
-        if(!password.equals(confirmPassword)){
+        } else if (!password.equals(confirmPassword)){
             confirmPasswordTxt.setError("Las contreseñas tienen que ser iguales");
             isValid = false;
+        } else {
+            confirmPasswordTxt.setError(null);
         }
         return isValid;
     }

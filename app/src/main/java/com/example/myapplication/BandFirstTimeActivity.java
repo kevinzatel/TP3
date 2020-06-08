@@ -1,24 +1,18 @@
 package com.example.myapplication;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.RectShape;
 import android.location.Address;
 import android.location.Geocoder;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
@@ -27,6 +21,7 @@ public class BandFirstTimeActivity extends AppCompatActivity {
     DataBaseHelper db;
     String userName, nickname, phone, timeOfDay, district;
     Address address;
+    ImageView checkOkIcon;
     EditText nicknameTxt, phoneTxt, addressTxt;
     Button createBtn, searchAdressBtn;
 
@@ -41,6 +36,7 @@ public class BandFirstTimeActivity extends AppCompatActivity {
         nicknameTxt = (EditText) findViewById(R.id.nicknameBandTxt);
         phoneTxt = (EditText) findViewById(R.id.phoneBandTxt);
         addressTxt = (EditText) findViewById(R.id.addressBandTxt);
+        checkOkIcon = (ImageView) findViewById(R.id.imageIconCheckBandFirst);
         searchAdressBtn = (Button) findViewById(R.id.searchAdressBandBtn);
         createBtn = (Button) findViewById(R.id.createBandBtn);
 
@@ -52,23 +48,21 @@ public class BandFirstTimeActivity extends AppCompatActivity {
     private void activateUser(){
 
         searchAdressBtn.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onClick(View v) {
+                checkOkIcon.setVisibility(View.GONE);
                 String getAddress = addressTxt.getText().toString();
-                if (!getAddress.isEmpty()){
+                if (isValidAddress(getAddress)){
+                    addressTxt.setError(null);
                     address = getLocation(getAddress);
                     if (address == null) {
                         addressTxt.setError("No se encontró ninguna ubicación con los datos que ingresaste");
                     } else {
-                        ShapeDrawable shape = new ShapeDrawable(new RectShape());
-                        shape.getPaint().setColor(Color.GREEN);
-                        shape.getPaint().setStyle(Paint.Style.STROKE);
-                        shape.getPaint().setStrokeWidth(3);
-                        addressTxt.setBackground(shape);
+                        addressTxt.setError(null);
+                        checkOkIcon.setVisibility(View.VISIBLE);
                     }
                 } else {
-                    addressTxt.setError("Por favor, ingresá una dirección");
+                    addressTxt.setError("Por favor, ingresá una dirección válida");
                 }
             }
         });
@@ -80,7 +74,7 @@ public class BandFirstTimeActivity extends AppCompatActivity {
                 nickname = nicknameTxt.getText().toString();
                 phone = phoneTxt.getText().toString();
                 if(isUserFormValid(nickname, phone, address)){
-                    isCreated = db.activateBand(userName, nickname, phone, timeOfDay, district, String.valueOf(address.getLatitude()) + "|" + String.valueOf(address.getLongitude()));
+                    isCreated = db.activateBand(userName, nickname, phone, timeOfDay, district, String.valueOf(address.getLatitude()), String.valueOf(address.getLongitude()));
                     if(isCreated) {
                         Intent loginIntent = new Intent(getApplicationContext(), LogInActivity.class);
                         startActivity(loginIntent);
@@ -103,20 +97,17 @@ public class BandFirstTimeActivity extends AppCompatActivity {
             if (addresses.size() > 0) {
 
                 Boolean found = false;
-                String localidad = addresses.get(0).getSubLocality().toUpperCase();
-                String [] localidades = getResources().getStringArray(R.array.barrios);
+                String localidad = (addresses.get(0).getSubLocality() != null) ? addresses.get(0).getSubLocality().toUpperCase() : null;
 
-                for (String l : localidades) {
-                    if(l.toUpperCase().equals(localidad)){
+                if(localidad != null) {
+                    if (district.toUpperCase().equals(localidad)){
                         found = true;
-                        break;
                     }
                 }
-
                 if (found) { address = addresses.get(0); }
 
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -131,11 +122,11 @@ public class BandFirstTimeActivity extends AppCompatActivity {
 
         districtDropDown = findViewById(R.id.districtBandDropDown);
         districtItems = getResources().getStringArray(R.array.barrios);
-        districtAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, districtItems);
+        districtAdapter = new ArrayAdapter<>(this, R.layout.spinner_layout, districtItems);
 
         timeOfDayDropDown = findViewById(R.id.timeOfDayBandDropDown);
         timeOfDayItems = getResources().getStringArray(R.array.turnos);
-        timeOfDayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, timeOfDayItems);
+        timeOfDayAdapter = new ArrayAdapter<>(this, R.layout.spinner_layout, timeOfDayItems);
 
         districtDropDown.setAdapter(districtAdapter);
         districtDropDown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -173,19 +164,46 @@ public class BandFirstTimeActivity extends AppCompatActivity {
         if(nickname.isEmpty()){
             nicknameTxt.setError("Por favor, ingresá el nombre de tu banda");
             isValid = false;
+        } else {
+            nicknameTxt.setError(null);
         }
         if(phone.isEmpty()){
             phoneTxt.setError("Por favor, ingresá una número de contacto");
             isValid = false;
-        }
-        if(!isNumeric(phone)){
+        } else if(!isNumeric(phone)){
             phoneTxt.setError("Por favor, ingresá una número valido");
             isValid = false;
+        } else if(!(phone.length() == 8)){
+            phoneTxt.setError("Por favor, ingresá una número de 8 dígitos");
+            isValid = false;
+        } else {
+            phoneTxt.setError(null);
         }
         if(address == null){
             addressTxt.setError("Por favor, ingresá una dirección valida");
             isValid = false;
+        } else {
+            addressTxt.setError(null);
         }
+        return isValid;
+    }
+
+    private boolean isValidAddress(String address){
+
+        boolean isValid = true;
+
+        if(address == null){
+            isValid = false;
+        } else if(address.isEmpty()){
+            isValid = false;
+        } else if((address.length() < 3) || (address.length() > 50)){
+            isValid = false;
+        } else if((address.split(" ").length < 2) || (address.split(" ").length > 10)){
+            isValid = false;
+        } else if(!isNumeric((address.split(" ")[(address.split(" ").length) - 1]))){
+            isValid = false;
+        }
+
         return isValid;
     }
 
