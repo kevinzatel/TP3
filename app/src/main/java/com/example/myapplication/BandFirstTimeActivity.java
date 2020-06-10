@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -10,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +25,7 @@ public class BandFirstTimeActivity extends AppCompatActivity {
     Address address;
     ImageView checkOkIcon;
     EditText nicknameTxt, phoneTxt, addressTxt;
+    ProgressBar progressBarBand;
     Button createBtn, searchAdressBtn;
 
     @Override
@@ -38,7 +41,11 @@ public class BandFirstTimeActivity extends AppCompatActivity {
         addressTxt = (EditText) findViewById(R.id.addressBandTxt);
         checkOkIcon = (ImageView) findViewById(R.id.imageIconCheckBandFirst);
         searchAdressBtn = (Button) findViewById(R.id.searchAdressBandBtn);
+        progressBarBand = (ProgressBar) findViewById(R.id.progressBarBandFirst);
         createBtn = (Button) findViewById(R.id.createBandBtn);
+
+        progressBarBand.setVisibility(View.GONE);
+        checkOkIcon.setVisibility(View.GONE);
 
         fillDropDowns();
         activateUser();
@@ -54,13 +61,9 @@ public class BandFirstTimeActivity extends AppCompatActivity {
                 String getAddress = addressTxt.getText().toString();
                 if (isValidAddress(getAddress)){
                     addressTxt.setError(null);
-                    address = getLocation(getAddress);
-                    if (address == null) {
-                        addressTxt.setError("No se encontró ninguna ubicación con los datos que ingresaste");
-                    } else {
-                        addressTxt.setError(null);
-                        checkOkIcon.setVisibility(View.VISIBLE);
-                    }
+                    SearchLocationProcess searchAddressAsyncTask = new SearchLocationProcess();
+                    String [] params = { getAddress };
+                    searchAddressAsyncTask.execute(params);
                 } else {
                     addressTxt.setError("Por favor, ingresá una dirección válida");
                 }
@@ -70,21 +73,102 @@ public class BandFirstTimeActivity extends AppCompatActivity {
         createBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean isCreated;
                 nickname = nicknameTxt.getText().toString();
                 phone = phoneTxt.getText().toString();
                 if(isUserFormValid(nickname, phone, address)){
-                    isCreated = db.activateBand(userName, nickname, phone, timeOfDay, district, String.valueOf(address.getLatitude()), String.valueOf(address.getLongitude()));
-                    if(isCreated) {
-                        Intent loginIntent = new Intent(getApplicationContext(), LogInActivity.class);
-                        startActivity(loginIntent);
-                    }
-                    else {
-                        Toast.makeText(BandFirstTimeActivity.this, "Ocurrió un error interno. Por favor, intentá nuevamente", Toast.LENGTH_LONG).show();
-                    }
+                    ActivateBandProcess activateBandnAsyncTask = new ActivateBandProcess();
+                    String [] params = { userName, nickname, phone, timeOfDay, district, String.valueOf(address.getLatitude()), String.valueOf(address.getLongitude()) };
+                    activateBandnAsyncTask.execute(params);
                 }
             }
         });
+    }
+
+    private class ActivateBandProcess extends AsyncTask<String, Void, Boolean> {
+
+        private String userName;
+        private String nickname;
+        private String phone;
+        private String timeOfDay;
+        private String district;
+        private String latitude;
+        private String longitude;
+
+        @Override
+        protected void onPreExecute() {
+            progressBarBand.setVisibility(View.VISIBLE);
+            createBtn.setEnabled(false);
+            searchAdressBtn.setEnabled(false);
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+
+            this.userName = params[0];
+            this.nickname = params[1];
+            this.phone = params[2];
+            this.timeOfDay = params[3];
+            this.district = params[4];
+            this.latitude = params[5];
+            this.longitude = params[6];
+
+            boolean isCreated = db.activateBand(this.userName, this.nickname, this.phone, this.timeOfDay, this.district, this.latitude, this.longitude);
+
+            return isCreated;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean isCreated) {
+
+            progressBarBand.setVisibility(View.GONE);
+            createBtn.setEnabled(true);
+            searchAdressBtn.setEnabled(true);
+
+            if(isCreated) {
+                Intent loginIntent = new Intent(getApplicationContext(), LogInActivity.class);
+                startActivity(loginIntent);
+            }
+            else {
+                Toast.makeText(BandFirstTimeActivity.this, "Ocurrió un error interno. Por favor, intentá nuevamente", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    private class SearchLocationProcess extends AsyncTask<String, Void, Address> {
+
+        private String getAddress;
+
+        @Override
+        protected void onPreExecute() {
+
+            checkOkIcon.setVisibility(View.GONE);
+            progressBarBand.setVisibility(View.VISIBLE);
+            createBtn.setEnabled(false);
+            searchAdressBtn.setEnabled(false);
+        }
+
+        @Override
+        protected Address doInBackground(String... params) {
+
+            this.getAddress = params[0];
+            address = getLocation(this.getAddress);
+            return address;
+        }
+
+        @Override
+        protected void onPostExecute(Address responseAddress) {
+
+            progressBarBand.setVisibility(View.GONE);
+            createBtn.setEnabled(true);
+            searchAdressBtn.setEnabled(true);
+
+            if (address == null) {
+                addressTxt.setError("No se encontró ninguna ubicación con los datos que ingresaste");
+            } else {
+                addressTxt.setError(null);
+                checkOkIcon.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     private Address getLocation(String location){

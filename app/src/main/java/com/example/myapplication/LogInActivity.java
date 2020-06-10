@@ -46,9 +46,9 @@ public class LogInActivity extends AppCompatActivity {
 
                 if (isUserFormValid(userName, password)){
 
-                    SignUpProcess signUpAsyncTask = new SignUpProcess();
+                    LoginProcess signInAsyncTask = new LoginProcess();
                     String [] params = { userName, password};
-                    signUpAsyncTask.execute(params);
+                    signInAsyncTask.execute(params);
                     
                 }
             }
@@ -63,7 +63,7 @@ public class LogInActivity extends AppCompatActivity {
         });
     }
 
-    private class SignUpProcess extends AsyncTask<String, Void, User> {
+    private class LoginProcess extends AsyncTask<String, Void, User> {
 
         private String userName;
         private String password;

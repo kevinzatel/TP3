@@ -1,12 +1,14 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +18,7 @@ public class SignUpActivity extends AppCompatActivity {
     DataBaseHelper db;
     String type;
     EditText userNameTxt, passwordTxt, confirmPasswordTxt;
+    ProgressBar progressBarSignUp;
     Button signUpBtn;
     int isBand;
 
@@ -29,7 +32,10 @@ public class SignUpActivity extends AppCompatActivity {
         userNameTxt = (EditText) findViewById(R.id.userNameTxt);
         passwordTxt = (EditText) findViewById(R.id.passwordTxt);
         confirmPasswordTxt = (EditText) findViewById(R.id.confirmPasswordTxt);
+        progressBarSignUp = (ProgressBar) findViewById(R.id.progressBarSignUp);
         signUpBtn = (Button) findViewById(R.id.signUpBtn);
+
+        progressBarSignUp.setVisibility(View.GONE);
 
         fillDropDowns();
         addUser();
@@ -41,27 +47,17 @@ public class SignUpActivity extends AppCompatActivity {
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean isAdded;
+
                 String userName = userNameTxt.getText().toString();
                 String password = passwordTxt.getText().toString();
                 String confirmPassword = confirmPasswordTxt.getText().toString();
 
                 if(isUserFormValid(userName, password, confirmPassword)){
-                        isAdded = db.insertUser(userName, password, isBand);
-                        if(isAdded) {
-                            Intent firstTimeIntent;
-                            if(isBand()){
-                                firstTimeIntent = new Intent(getApplicationContext(), BandFirstTimeActivity.class);
-                            }
-                            else {
-                                firstTimeIntent = new Intent(getApplicationContext(), MusicianFirstTimeActivity.class);
-                            }
-                            firstTimeIntent.putExtra("userName", userName);
-                            startActivity(firstTimeIntent);
-                        }
-                        else {
-                            Toast.makeText(SignUpActivity.this, "Ocurrió un error interno. Por favor, intentá nuevamente", Toast.LENGTH_LONG).show();
-                        }
+
+                    SignUpProcess signUpAsyncTask = new SignUpProcess();
+                    String [] params = { userName, password, String.valueOf(isBand) };
+                    signUpAsyncTask.execute(params);
+
                 }
             }
         });
@@ -69,6 +65,54 @@ public class SignUpActivity extends AppCompatActivity {
 
     private boolean isBand(){
         return type.equals(getResources().getStringArray(R.array.tipo)[1]);
+    }
+
+    private class SignUpProcess extends AsyncTask<String, Void, Boolean> {
+
+        private String userName;
+        private String password;
+        private int isBand;
+
+        @Override
+        protected void onPreExecute() {
+            progressBarSignUp.setVisibility(View.VISIBLE);
+            signUpBtn.setEnabled(false);
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+
+            this.userName = params[0];
+            this.password = params[1];
+            this.isBand = Integer.parseInt(params[2]);
+
+            boolean isAdded = db.insertUser(userName, password, isBand);
+
+            return isAdded;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean isAdded) {
+
+            progressBarSignUp.setVisibility(View.GONE);
+            signUpBtn.setEnabled(true);
+
+            if(isAdded) {
+                Intent firstTimeIntent;
+                if(isBand()){
+                    firstTimeIntent = new Intent(getApplicationContext(), BandFirstTimeActivity.class);
+                }
+                else {
+                    firstTimeIntent = new Intent(getApplicationContext(), MusicianFirstTimeActivity.class);
+                }
+                firstTimeIntent.putExtra("userName", this.userName);
+                startActivity(firstTimeIntent);
+            }
+            else {
+                Toast.makeText(SignUpActivity.this, "Ocurrió un error interno. Por favor, intentá nuevamente", Toast.LENGTH_LONG).show();
+            }
+
+        }
     }
 
     private void fillDropDowns(){

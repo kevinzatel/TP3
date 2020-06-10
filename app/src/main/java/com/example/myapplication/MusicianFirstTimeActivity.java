@@ -1,10 +1,12 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,6 +15,7 @@ public class MusicianFirstTimeActivity extends AppCompatActivity {
     DataBaseHelper db;
     String userName, nickname, phone;
     EditText nicknameTxt, phoneTxt;
+    ProgressBar progressBarMusician;
     Button createBtn;
 
     @Override
@@ -25,7 +28,10 @@ public class MusicianFirstTimeActivity extends AppCompatActivity {
 
         nicknameTxt = (EditText) findViewById(R.id.nicknameMusicianTxt);
         phoneTxt = (EditText) findViewById(R.id.phoneMusicianTxt);
+        progressBarMusician = (ProgressBar) findViewById(R.id.progressBarMusicianFirst);
         createBtn = (Button) findViewById(R.id.createMusicianBtn);
+
+        progressBarMusician.setVisibility(View.GONE);
 
         activateUser();
 
@@ -36,22 +42,56 @@ public class MusicianFirstTimeActivity extends AppCompatActivity {
         createBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean isCreated;
                 nickname = nicknameTxt.getText().toString();
                 phone = phoneTxt.getText().toString();
 
                 if(isUserFormValid(nickname, phone)){
-                    isCreated = db.activateMusician(userName, nickname, phone);
-                    if(isCreated) {
-                        Intent loginIntent = new Intent(getApplicationContext(), LogInActivity.class);
-                        startActivity(loginIntent);
-                    }
-                    else {
-                        Toast.makeText(MusicianFirstTimeActivity.this, "Ocurrió un error interno. Por favor, intentá nuevamente", Toast.LENGTH_LONG).show();
-                    }
+                    ActivateMusicianProcess activateMusicianAsyncTask = new ActivateMusicianProcess();
+                    String [] params = { userName, nickname, phone };
+                    activateMusicianAsyncTask.execute(params);
                 }
             }
         });
+    }
+
+    private class ActivateMusicianProcess extends AsyncTask<String, Void, Boolean> {
+
+        private String userName;
+        private String nickname;
+        private String phone;
+
+        @Override
+        protected void onPreExecute() {
+            progressBarMusician.setVisibility(View.VISIBLE);
+            createBtn.setEnabled(false);
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+
+            this.userName = params[0];
+            this.nickname = params[1];
+            this.phone = params[2];
+
+            boolean isCreated = db.activateMusician(userName, nickname, phone);
+
+            return isCreated;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean isCreated) {
+
+            progressBarMusician.setVisibility(View.GONE);
+            createBtn.setEnabled(true);
+
+            if(isCreated) {
+                Intent loginIntent = new Intent(getApplicationContext(), LogInActivity.class);
+                startActivity(loginIntent);
+            }
+            else {
+                Toast.makeText(MusicianFirstTimeActivity.this, "Ocurrió un error interno. Por favor, intentá nuevamente", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     private boolean isUserFormValid(String nickname, String phone){
