@@ -8,7 +8,8 @@ public class User implements Serializable {
     private String userName;
     private String password;
     private String nickname;
-    private String adress;
+    private String latitude;
+    private String longitude;
     private String district;
     private String instrument;
     private String timeOfDay;
@@ -25,7 +26,8 @@ public class User implements Serializable {
         this.isBand = isBand;
         this.active = false;
         this.nickname = null;
-        this.adress = null;
+        this.latitude = null;
+        this.longitude = null;
         this.district = null;
         this.instrument = null;
         this.timeOfDay = null;
@@ -33,11 +35,12 @@ public class User implements Serializable {
         this.musicianSearching = null;
     }
 
-    public User(String userName, String password, String nickname, String adress, String district, String instrument, String timeOfDay, String phone, boolean isBand, boolean active, ArrayList<String> musicianSearching) {
+    public User(String userName, String password, String nickname, String latitude, String longitude, String district, String instrument, String timeOfDay, String phone, boolean isBand, boolean active, ArrayList<String> musicianSearching) {
         this.userName = userName;
         this.password = password;
         this.nickname = nickname;
-        this.adress = adress;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.district = district;
         this.instrument = instrument;
         this.timeOfDay = timeOfDay;
@@ -55,9 +58,13 @@ public class User implements Serializable {
 
     public void setNickname(String nickname) { this.nickname = nickname; }
 
-    public String getAdress() { return adress; }
+    public String getLatitude() { return latitude; }
 
-    public void setAdress(String adress) { this.adress = adress; }
+    public void setLatitude(String latitude) { this.latitude = latitude; }
+
+    public String getLongitude() { return longitude; }
+
+    public void setLongitude(String longitude) { this.longitude = longitude; }
 
     public String getDistrict() { return district; }
 
