@@ -118,7 +118,7 @@ public class LogInActivity extends AppCompatActivity {
                 }
                 else{
                     landingIntent = new Intent(getApplicationContext(), MusicianLandingActivity.class);
-                    landingIntent.putExtra("userName", this.userName);
+                    landingIntent.putExtra("user", user);
                 }
                 startActivity(landingIntent);
             }

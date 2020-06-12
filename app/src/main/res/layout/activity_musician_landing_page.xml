@@ -8,63 +8,65 @@
 
     <TextView
         android:id="@+id/welcomeTxt"
-        android:layout_width="13dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="35dp"
-        android:layout_marginBottom="256dp"
-        android:text="Hi"
-        app:layout_constraintBottom_toTopOf="@+id/btLogout"
+        android:layout_width="262dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="49dp"
+        android:textAllCaps="false"
+        android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Bienvenido Nombre!" />
 
     <Button
         android:id="@+id/btLogout"
-        android:layout_width="138dp"
-        android:layout_height="46dp"
-        android:layout_marginBottom="376dp"
+        android:layout_width="307dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/custom_button"
         android:text="Logout"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btSolicitudes" />
+
+    <Button
+        android:id="@+id/btEditPerfil"
+        android:layout_width="178dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="71dp"
+        android:background="@drawable/custom_button"
+        android:text="Editar Perfil"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/welcomeTxt" />
 
     <Button
-        android:id="@+id/btEditPerfil"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_marginTop="141dp"
-        android:layout_marginEnd="17dp"
-        android:layout_marginRight="17dp"
-        android:layout_marginBottom="121dp"
-        android:text="Editar Perfil"
-        app:layout_constraintBottom_toTopOf="@+id/btLogout"
-        app:layout_constraintEnd_toStartOf="@+id/btFindBanda"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
         android:id="@+id/btFindBanda"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_marginEnd="11dp"
-        android:layout_marginRight="11dp"
+        android:layout_width="178dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/custom_button"
         android:text="Buscar Banda"
-        app:layout_constraintBaseline_toBaselineOf="@+id/btEditPerfil"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btEditPerfil" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btEditPerfil" />
 
     <Button
         android:id="@+id/btSolicitudes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_marginBottom="31dp"
-        android:text="Mis Solicitud"
-        app:layout_constraintBottom_toTopOf="@+id/btLogout"
-        app:layout_constraintStart_toStartOf="@+id/btLogout"
-        app:layout_constraintTop_toBottomOf="@+id/welcomeTxt"
-        app:layout_constraintVertical_bias="0.875" />
+        android:layout_width="178dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/custom_button"
+        android:text="Mis Solicitudes"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btFindBanda" />
 </androidx.constraintlayout.widget.ConstraintLayout>
