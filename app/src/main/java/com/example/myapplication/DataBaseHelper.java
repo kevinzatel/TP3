@@ -67,8 +67,8 @@ public class DataBaseHelper {
         users.document(user.getUserName()).update("musicianSearching", selectedMusicians);
     }
 
-    public void editMusicianProfile(User user, EditText instrumento, EditText nombre, EditText password) {
-        users.document(user.getUserName()).update("userName",nombre,"instrument",instrumento,"password",password);
+    public void editMusicianProfile(User user, String nombre, String password,String Phone) {
+        users.document(user.getUserName()).update("userName",nombre,"password",password,"phone",Phone);
     }
 
     public void desactivateMusicianSearch(User user){

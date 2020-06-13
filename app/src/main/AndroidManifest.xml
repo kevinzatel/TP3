@@ -18,6 +18,8 @@
         <activity android:name=".BandLandingPageActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".MusicianLandingActivity" />
+        <activity android:name=".MusicianEditProfileActivity" />
+        <activity android:name=".MusicianProfileActivity" />
         <activity android:name=".LogInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
