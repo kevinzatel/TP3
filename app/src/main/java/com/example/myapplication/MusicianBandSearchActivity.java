@@ -14,13 +14,16 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.List;
 import java.util.Locale;
 
-public class BandFirstTimeActivity extends AppCompatActivity {
+public class MusicianBandSearchActivity extends AppCompatActivity {
 
     DataBaseHelper db;
+    User user;
     String userName, nickname, phone, timeOfDay, district;
     Address address;
     ImageView checkOkIcon;
@@ -34,7 +37,7 @@ public class BandFirstTimeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_band_first_time);
         db = new DataBaseHelper();
-        userName = (String) getIntent().getSerializableExtra("userName");
+        user = (User) getIntent().getSerializableExtra("user");
 
         nicknameTxt = (EditText) findViewById(R.id.nicknameBandTxt);
         phoneTxt = (EditText) findViewById(R.id.phoneBandTxt);
@@ -44,8 +47,8 @@ public class BandFirstTimeActivity extends AppCompatActivity {
         progressBarBand = (ProgressBar) findViewById(R.id.progressBarBandFirst);
         createBtn = (Button) findViewById(R.id.createBandBtn);
 
-        progressBarBand.setVisibility(View.INVISIBLE);
-        checkOkIcon.setVisibility(View.INVISIBLE);
+        progressBarBand.setVisibility(View.GONE);
+        checkOkIcon.setVisibility(View.GONE);
 
         fillDropDowns();
         activateUser();
@@ -57,7 +60,7 @@ public class BandFirstTimeActivity extends AppCompatActivity {
         searchAdressBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkOkIcon.setVisibility(View.INVISIBLE);
+                checkOkIcon.setVisibility(View.GONE);
                 String getAddress = addressTxt.getText().toString();
                 if (isValidAddress(getAddress)){
                     addressTxt.setError(null);
@@ -120,7 +123,7 @@ public class BandFirstTimeActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean isCreated) {
 
-            progressBarBand.setVisibility(View.INVISIBLE);
+            progressBarBand.setVisibility(View.GONE);
             createBtn.setEnabled(true);
             searchAdressBtn.setEnabled(true);
 
@@ -129,7 +132,7 @@ public class BandFirstTimeActivity extends AppCompatActivity {
                 startActivity(loginIntent);
             }
             else {
-                Toast.makeText(BandFirstTimeActivity.this, "Ocurrió un error interno. Por favor, intentá nuevamente", Toast.LENGTH_LONG).show();
+                Toast.makeText(MusicianBandSearchActivity.this, "Ocurrió un error interno. Por favor, intentá nuevamente", Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -141,7 +144,7 @@ public class BandFirstTimeActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
 
-            checkOkIcon.setVisibility(View.INVISIBLE);
+            checkOkIcon.setVisibility(View.GONE);
             progressBarBand.setVisibility(View.VISIBLE);
             createBtn.setEnabled(false);
             searchAdressBtn.setEnabled(false);
@@ -158,7 +161,7 @@ public class BandFirstTimeActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Address responseAddress) {
 
-            progressBarBand.setVisibility(View.INVISIBLE);
+            progressBarBand.setVisibility(View.GONE);
             createBtn.setEnabled(true);
             searchAdressBtn.setEnabled(true);
 
@@ -174,7 +177,7 @@ public class BandFirstTimeActivity extends AppCompatActivity {
     private Address getLocation(String location){
 
         Address address = null;
-        Geocoder geoCoder = new Geocoder(BandFirstTimeActivity.this, Locale.getDefault());
+        Geocoder geoCoder = new Geocoder(MusicianBandSearchActivity.this, Locale.getDefault());
 
         try {
             List<Address> addresses = geoCoder.getFromLocationName(location + "," + getResources().getStringArray(R.array.ciudad_busqueda)[0] + "," + getResources().getStringArray(R.array.provincia_busqueda)[0] + "," + getResources().getStringArray(R.array.pais_busqueda)[0], 1);

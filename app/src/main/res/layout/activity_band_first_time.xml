@@ -1,180 +1,186 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
-    <Button
-        android:id="@+id/createBandBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:background="@drawable/custom_button"
-        android:text="  Creá tu Cuenta  "
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchAdressBandBtn" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF">
 
-    <Spinner
-        android:id="@+id/timeOfDayBandDropDown"
-        android:layout_width="232dp"
-        android:layout_height="39dp"
-        android:layout_marginTop="7dp"
-        android:gravity="center"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/disponibilidadTxt" />
+        <Button
+            android:id="@+id/createBandBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/custom_button"
+            android:text="  Creá tu Cuenta  "
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="#FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchAdressBandBtn" />
 
-    <TextView
-        android:id="@+id/disponibilidadTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:gravity="center"
-        android:text="¿Disponibilidad?"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/phoneBandTxt" />
+        <Spinner
+            android:id="@+id/timeOfDayBandDropDown"
+            android:layout_width="232dp"
+            android:layout_height="39dp"
+            android:layout_marginTop="7dp"
+            android:gravity="center"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/disponibilidadTxt" />
 
-    <EditText
-        android:id="@+id/phoneBandTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:ems="10"
-        android:gravity="center"
-        android:hint="Ingresá un teléfono"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/nicknameBandTxt" />
+        <TextView
+            android:id="@+id/disponibilidadTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:gravity="center"
+            android:text="¿Disponibilidad?"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/phoneBandTxt" />
 
-    <EditText
-        android:id="@+id/nicknameBandTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:gravity="center"
-        android:hint="Ingresá tu banda"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bandWelcomeTxt" />
+        <EditText
+            android:id="@+id/phoneBandTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="Ingresá un teléfono"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/nicknameBandTxt" />
 
-    <TextView
-        android:id="@+id/bandWelcomeTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="Bienvenido :)"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:textSize="28sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        <EditText
+            android:id="@+id/nicknameBandTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="Ingresá tu banda"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bandWelcomeTxt" />
 
-    <TextView
-        android:id="@+id/localidadTxt"
-        android:layout_width="115dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="5dp"
-        android:gravity="center"
-        android:text="¿Localidad?"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timeOfDayBandDropDown" />
+        <TextView
+            android:id="@+id/bandWelcomeTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Bienvenido :)"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textSize="28sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
-    <Spinner
-        android:id="@+id/districtBandDropDown"
-        android:layout_width="232dp"
-        android:layout_height="39dp"
-        android:layout_marginTop="3dp"
-        android:gravity="center"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/localidadTxt" />
+        <TextView
+            android:id="@+id/localidadTxt"
+            android:layout_width="115dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="¿Localidad?"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/timeOfDayBandDropDown" />
 
-    <TextView
-        android:id="@+id/addressBandTextoTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Ingresá tu dirección"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/districtBandDropDown" />
+        <Spinner
+            android:id="@+id/districtBandDropDown"
+            android:layout_width="232dp"
+            android:layout_height="39dp"
+            android:layout_marginTop="3dp"
+            android:gravity="center"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/localidadTxt" />
 
-    <EditText
-        android:id="@+id/addressBandTxt"
-        android:layout_width="235dp"
-        android:layout_height="43dp"
-        android:layout_marginTop="5dp"
-        android:ems="10"
-        android:gravity="center"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addressBandTextoTxt" />
+        <TextView
+            android:id="@+id/addressBandTextoTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="Ingresá tu dirección"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/districtBandDropDown" />
 
-    <Button
-        android:id="@+id/searchAdressBandBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/custom_button"
-        android:text="  Validá tu Dirección  "
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addressBandTxt" />
+        <EditText
+            android:id="@+id/addressBandTxt"
+            android:layout_width="235dp"
+            android:layout_height="43dp"
+            android:layout_marginTop="5dp"
+            android:ems="10"
+            android:gravity="center"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addressBandTextoTxt" />
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="313dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/lets_play_title" />
+        <Button
+            android:id="@+id/searchAdressBandBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/custom_button"
+            android:text="  Validá tu Dirección  "
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="#FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addressBandTxt" />
 
-    <ImageView
-        android:id="@+id/imageIconCheckBandFirst"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="41dp"
-        android:layout_marginRight="41dp"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/addressBandTxt"
-        app:layout_constraintTop_toBottomOf="@+id/districtBandDropDown"
-        app:srcCompat="@drawable/icon_check_ok" />
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="313dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/lets_play_title" />
 
-    <ProgressBar
-        android:id="@+id/progressBarBandFirst"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="126dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createBandBtn" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/imageIconCheckBandFirst"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="41dp"
+            android:layout_marginRight="41dp"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/addressBandTxt"
+            app:layout_constraintTop_toBottomOf="@+id/districtBandDropDown"
+            app:srcCompat="@drawable/icon_check_ok" />
+
+        <ProgressBar
+            android:id="@+id/progressBarBandFirst"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/createBandBtn" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
