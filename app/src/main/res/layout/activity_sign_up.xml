@@ -17,10 +17,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
             android:text="¿Qué sos?"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tipoDropDown"
             app:layout_constraintTop_toBottomOf="@+id/confirmPasswordTxt" />
 
         <EditText
@@ -77,14 +78,16 @@
 
         <Spinner
             android:id="@+id/tipoDropDown"
-            android:layout_width="212dp"
+            android:layout_width="160dp"
             android:layout_height="46dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="30dp"
             android:gravity="center"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/queSosTxt" />
+            app:layout_constraintTop_toBottomOf="@+id/confirmPasswordTxt" />
 
         <TextView
             android:id="@+id/creaTuCuentaTxt"

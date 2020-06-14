@@ -26,23 +26,13 @@
 
         <Spinner
             android:id="@+id/timeOfDayBandDropDown"
-            android:layout_width="232dp"
+            android:layout_width="150dp"
             android:layout_height="39dp"
-            android:layout_marginTop="7dp"
+            android:layout_marginTop="25dp"
             android:gravity="center"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
             android:textAlignment="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/disponibilidadTxt" />
-
-        <TextView
-            android:id="@+id/disponibilidadTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:gravity="center"
-            android:text="¿Disponibilidad?"
-            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/phoneBandTxt" />
@@ -85,28 +75,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
-        <TextView
-            android:id="@+id/localidadTxt"
-            android:layout_width="115dp"
-            android:layout_height="42dp"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:text="¿Localidad?"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/timeOfDayBandDropDown" />
-
         <Spinner
             android:id="@+id/districtBandDropDown"
-            android:layout_width="232dp"
+            android:layout_width="225dp"
             android:layout_height="39dp"
-            android:layout_marginTop="3dp"
+            android:layout_marginTop="30dp"
             android:gravity="center"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/localidadTxt" />
+            app:layout_constraintTop_toBottomOf="@+id/timeOfDayBandDropDown" />
 
         <TextView
             android:id="@+id/addressBandTextoTxt"
@@ -160,10 +140,10 @@
             android:layout_height="40dp"
             android:layout_marginStart="5dp"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="52dp"
             android:layout_marginEnd="41dp"
             android:layout_marginRight="41dp"
-            android:visibility="visible"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/addressBandTxt"
@@ -182,5 +162,27 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/createBandBtn" />
+
+        <ImageView
+            android:id="@+id/timeImgBand"
+            android:layout_width="42dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="17dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            app:layout_constraintEnd_toStartOf="@+id/timeOfDayBandDropDown"
+            app:layout_constraintTop_toBottomOf="@+id/phoneBandTxt"
+            app:srcCompat="@drawable/time_icon" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="46dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="17dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            app:layout_constraintEnd_toStartOf="@+id/districtBandDropDown"
+            app:layout_constraintTop_toBottomOf="@+id/timeOfDayBandDropDown"
+            app:srcCompat="@drawable/house_icon" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
