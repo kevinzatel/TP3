@@ -100,4 +100,33 @@ public class DataBaseHelper {
         return user;
     }
 
+    public ArrayList<User> getBand(String instrument, String district, String timeOfDay){
+
+        ArrayList<User> usersList = null;
+
+        Task<QuerySnapshot> task = db.collection(USERS_COLLECTION_NAME)
+                .whereEqualTo("active", true)
+                .whereEqualTo("band", true)
+                .whereEqualTo("district", district)
+                .whereEqualTo("timeOfDay", timeOfDay)
+                .whereArrayContains("musicianSearching", instrument)
+                .get();
+
+        while (!task.isComplete()) {}
+
+        if (task.isSuccessful()) {
+            QuerySnapshot queryDocumentSnapshots = task.getResult();
+            if (!queryDocumentSnapshots.isEmpty()) {
+
+                List<DocumentSnapshot> userList = queryDocumentSnapshots.getDocuments();
+                usersList = new ArrayList<User>();
+
+                for(DocumentSnapshot u : userList){
+                    User readedUser = u.toObject(User.class);
+                    usersList.add(readedUser);
+                }
+            }
+        }
+        return usersList;
+    }
 }

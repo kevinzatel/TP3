@@ -10,6 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".BandProfileActivity" />
+        <activity android:name=".MusicianBandSearchActivity" />
         <activity android:name=".MusicianProfileActivity" />
         <activity android:name=".MusicianFirstTimeActivity" />
         <activity android:name=".MusicianEditProfileActivity" />
