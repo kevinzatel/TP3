@@ -1,13 +1,16 @@
 package com.example.myapplication;
 
-import android.widget.EditText;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.annotation.Nullable;
 
 public class DataBaseHelper {
 
@@ -23,6 +26,8 @@ public class DataBaseHelper {
     private void setCollections(){
         users = db.collection(USERS_COLLECTION_NAME);
     }
+
+
 
     public boolean insertUser(String userName, String password, int isBand) {
 
@@ -74,6 +79,7 @@ public class DataBaseHelper {
     public void desactivateMusicianSearch(User user){
         users.document(user.getUserName()).update("musicianSearching", null);
     }
+
 
     public User getUser(String username){
 

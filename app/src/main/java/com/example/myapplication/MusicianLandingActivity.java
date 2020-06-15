@@ -42,6 +42,18 @@ public class MusicianLandingActivity extends AppCompatActivity {
             }
         });
 
+        /*VER SOLICITUDES*/
+
+        mySolicitudes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent viewRequestsIntent = new Intent(getApplicationContext(),MusicianRequests.class);
+                viewRequestsIntent.putExtra("user", user);
+                startActivity(viewRequestsIntent);
+
+            }
+        });
+
 
 
 
