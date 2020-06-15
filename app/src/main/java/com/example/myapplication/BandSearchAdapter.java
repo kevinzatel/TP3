@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,17 +9,17 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import java.util.ArrayList;
 
 public class BandSearchAdapter extends BaseAdapter implements ListAdapter {
 
     private ArrayList<User> list;
+    private User userLogged;
     private Context context;
 
-    public BandSearchAdapter(ArrayList<User> list, Context context) {
+    public BandSearchAdapter(User userLogged, ArrayList<User> list, Context context) {
         this.list = list;
+        this.userLogged = userLogged;
         this.context = context;
     }
 
@@ -54,7 +55,12 @@ public class BandSearchAdapter extends BaseAdapter implements ListAdapter {
         btnDetail.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Hiciste click en " + list.get(position).getNickname(), Toast.LENGTH_LONG).show();
+                ArrayList<User> data = new ArrayList<>();
+                data.add(userLogged);
+                data.add(list.get(position));
+                Intent bandDetailIntent = new Intent(context, BandDetailActivity.class);
+                bandDetailIntent.putExtra("data", data);
+                context.startActivity(bandDetailIntent);
             }
         });
 

@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
-import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 
@@ -103,12 +102,12 @@ public class MusicianBandSearchActivity extends AppCompatActivity {
 
             if(bands!=null) {
                 noResultsImg.setVisibility(View.GONE);
-                BandSearchAdapter bandAdapter = new BandSearchAdapter(bands, MusicianBandSearchActivity.this);
+                BandSearchAdapter bandAdapter = new BandSearchAdapter(user, bands, MusicianBandSearchActivity.this);
                 bandsListView.setAdapter(bandAdapter);
                 ((BaseAdapter) bandAdapter).notifyDataSetChanged();
             }
             else {
-                BandSearchAdapter bandAdapter = new BandSearchAdapter(new ArrayList<User>(), MusicianBandSearchActivity.this);
+                BandSearchAdapter bandAdapter = new BandSearchAdapter(user, new ArrayList<User>(), MusicianBandSearchActivity.this);
                 bandsListView.setAdapter(bandAdapter);
                 ((BaseAdapter) bandAdapter).notifyDataSetChanged();
                 noResultsImg.setVisibility(View.VISIBLE);
