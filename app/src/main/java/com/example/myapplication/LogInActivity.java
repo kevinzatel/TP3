@@ -32,7 +32,7 @@ public class LogInActivity extends AppCompatActivity {
         signUpLink = (TextView) findViewById(R.id.signUpLink);
         progressBar = (ProgressBar) findViewById(R.id.progressBarMain);
 
-        progressBar.setVisibility(View.GONE);
+        progressBar.setVisibility(View.INVISIBLE);
 
         signInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,7 +89,7 @@ public class LogInActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(User user) {
 
-            progressBar.setVisibility(View.GONE);
+            progressBar.setVisibility(View.INVISIBLE);
             signInBtn.setEnabled(true);
             signUpLink.setEnabled(true);
 

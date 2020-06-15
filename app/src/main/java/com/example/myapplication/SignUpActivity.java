@@ -35,7 +35,7 @@ public class SignUpActivity extends AppCompatActivity {
         progressBarSignUp = (ProgressBar) findViewById(R.id.progressBarSignUp);
         signUpBtn = (Button) findViewById(R.id.signUpBtn);
 
-        progressBarSignUp.setVisibility(View.GONE);
+        progressBarSignUp.setVisibility(View.INVISIBLE);
 
         fillDropDowns();
         addUser();
@@ -94,7 +94,7 @@ public class SignUpActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean isAdded) {
 
-            progressBarSignUp.setVisibility(View.GONE);
+            progressBarSignUp.setVisibility(View.INVISIBLE);
             signUpBtn.setEnabled(true);
 
             if(isAdded) {

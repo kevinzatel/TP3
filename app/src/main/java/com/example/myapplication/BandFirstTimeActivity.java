@@ -44,8 +44,8 @@ public class BandFirstTimeActivity extends AppCompatActivity {
         progressBarBand = (ProgressBar) findViewById(R.id.progressBarBandFirst);
         createBtn = (Button) findViewById(R.id.createBandBtn);
 
-        progressBarBand.setVisibility(View.GONE);
-        checkOkIcon.setVisibility(View.GONE);
+        progressBarBand.setVisibility(View.INVISIBLE);
+        checkOkIcon.setVisibility(View.INVISIBLE);
 
         fillDropDowns();
         activateUser();
@@ -57,7 +57,7 @@ public class BandFirstTimeActivity extends AppCompatActivity {
         searchAdressBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkOkIcon.setVisibility(View.GONE);
+                checkOkIcon.setVisibility(View.INVISIBLE);
                 String getAddress = addressTxt.getText().toString();
                 if (isValidAddress(getAddress)){
                     addressTxt.setError(null);
@@ -120,7 +120,7 @@ public class BandFirstTimeActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean isCreated) {
 
-            progressBarBand.setVisibility(View.GONE);
+            progressBarBand.setVisibility(View.INVISIBLE);
             createBtn.setEnabled(true);
             searchAdressBtn.setEnabled(true);
 
@@ -141,7 +141,7 @@ public class BandFirstTimeActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
 
-            checkOkIcon.setVisibility(View.GONE);
+            checkOkIcon.setVisibility(View.INVISIBLE);
             progressBarBand.setVisibility(View.VISIBLE);
             createBtn.setEnabled(false);
             searchAdressBtn.setEnabled(false);
@@ -158,7 +158,7 @@ public class BandFirstTimeActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Address responseAddress) {
 
-            progressBarBand.setVisibility(View.GONE);
+            progressBarBand.setVisibility(View.INVISIBLE);
             createBtn.setEnabled(true);
             searchAdressBtn.setEnabled(true);
 
