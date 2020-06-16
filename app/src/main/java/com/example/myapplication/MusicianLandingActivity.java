@@ -24,11 +24,7 @@ public class MusicianLandingActivity extends AppCompatActivity {
         final User user = (User) getIntent().getSerializableExtra("user");
 
         welcometxt.setText("Bienvenido " + user.getNickname() + " !");
-        /*if(user != null){
-            TextView welcomeText = (TextView) findViewById(R.id.welcomeTxt);
-            String userName = getIntent().getExtras().getString("userName");
-            welcomeText.append("Bienvenido " + userName);
-        }*/
+
 
 
         /*VER PERFIL*/
@@ -39,6 +35,15 @@ public class MusicianLandingActivity extends AppCompatActivity {
                 viewProfileIntent.putExtra("user", user);
                 startActivity(viewProfileIntent);
 
+            }
+        });
+
+        mySolicitudes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent viewRequests = new Intent(getApplicationContext(),MusicianRequests.class);
+                viewRequests.putExtra("user",user);
+                startActivity(viewRequests);
             }
         });
 

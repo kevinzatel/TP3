@@ -17,6 +17,7 @@ public class DataBaseHelper {
     public FirebaseFirestore db;
     public CollectionReference users;
     public static final String USERS_COLLECTION_NAME = "users";
+    public static final String REQUESTS_COLLECTION_NAME = "requests";
 
     public DataBaseHelper() {
         db = FirebaseFirestore.getInstance();
@@ -110,6 +111,7 @@ public class DataBaseHelper {
 
         ArrayList<User> usersList = null;
 
+
         Task<QuerySnapshot> task = db.collection(USERS_COLLECTION_NAME)
                 .whereEqualTo("active", true)
                 .whereEqualTo("band", true)
@@ -135,4 +137,35 @@ public class DataBaseHelper {
         }
         return usersList;
     }
+
+    public ArrayList<Requests> getRequest(String idmusician){
+
+
+        ArrayList<Requests> requestsArrayList = null;
+        Task<QuerySnapshot> task = db.collection(REQUESTS_COLLECTION_NAME)
+
+                .whereEqualTo("idMusician",idmusician)
+                .get();
+
+        while (!task.isComplete()) {}
+
+        if (task.isSuccessful()) {
+            QuerySnapshot queryDocumentSnapshots = task.getResult();
+
+            if (!queryDocumentSnapshots.isEmpty()) {
+                List<DocumentSnapshot> reqList = queryDocumentSnapshots.getDocuments();
+                requestsArrayList = new ArrayList<Requests>();
+
+                for(DocumentSnapshot u : reqList){
+                    Requests readedReq = u.toObject(Requests.class);
+                    requestsArrayList.add(readedReq);
+                }
+            }
+        }
+        return requestsArrayList;
+    }
+
+
+
+
 }

@@ -1,9 +1,14 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,16 +21,18 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nullable;
 
-public class MusicianRequests extends AppCompatActivity {
+public class MusicianRequests extends AppCompatActivity   {
 
     DataBaseHelper db;
     public CollectionReference users;
     ListView lvRequests;
+
 
 
 
@@ -35,61 +42,36 @@ public class MusicianRequests extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_musician_requests);
 
-        lvRequests = findViewById(R.id.listRequests);
+        lvRequests = (ListView) findViewById(R.id.listRequests);
+        //lvRequests.setOnItemClickListener(this);
 
         db = new DataBaseHelper();
         final User user = (User) getIntent().getSerializableExtra("user");
-        listRequests();
-
-    }
+        String idmusician = user.getUserName();
 
 
-    public void  listRequests(  ){
-        List <String> listRequest = new ArrayList<>();
-        Task<QuerySnapshot> task = users.get();
+
+        ArrayList<Requests> reqList =  db.getRequest(idmusician);
 
 
-        while(!task.isComplete()){}
-
-        if(task.isSuccessful()) {
-            listRequest.clear();
-            QuerySnapshot queryDocumentSnapshots = task.getResult();
-            List<DocumentSnapshot> reqList = queryDocumentSnapshots.getDocuments();
-            for (DocumentSnapshot r : queryDocumentSnapshots) {
-                listRequest.add(r.getString("userName"));
-
-            }
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, listRequest);
-            adapter.notify();
-            lvRequests.setAdapter(adapter);
-        }
+        MusicianRequestAdapter reqAdapter = new MusicianRequestAdapter(MusicianRequests.this,R.layout.request_row,reqList);
+        lvRequests.setAdapter(reqAdapter);
+        reqAdapter.notifyDataSetChanged();
 
 
-/*
-        final List<String> listRequest = new ArrayList<>();
-        users.addSnapshotListener(new EventListener<QuerySnapshot>() {
+     /*   lvRequests.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                if (e!=null){
-                    Log.d("Error","Error:"+e.getMessage());
-                }
-                else {
-                    listRequest.clear();
-                    for (DocumentSnapshot snapshot : queryDocumentSnapshots) {
-                        listRequest.add(snapshot.getString("userName"));
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent requestDetailIntent = new Intent(view.getContext(),MusicianRequestDetailActivity.class);
+                requestDetailIntent.putExtra("request",)
 
-                    }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, listRequest);
-                    adapter.notify();
-                    lvRequests.setAdapter(adapter);
-                }
+            }
+        });*/
+
+
+
             }
 
-
-
-        });
-*/
-    }
 
 
 }

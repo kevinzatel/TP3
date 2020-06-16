@@ -14,13 +14,12 @@
         <activity android:name=".MusicianFirstTimeActivity"></activity>
         <activity android:name=".MusicianEditProfileActivity"></activity>
         <activity android:name=".BandFirstTimeActivity"></activity>
+        <activity android:name=".MusicianLandingActivity" />
+        <activity android:name=".MusicianRequests" />
         <activity android:name=".SearchMusicianActivity" />
         <activity android:name=".BandLandingPageActivity" />
         <activity android:name=".SignUpActivity" />
-        <activity android:name=".MusicianLandingActivity" />
-        <activity android:name=".MusicianEditProfileActivity" />
-        <activity android:name=".MusicianProfileActivity" />
-        <activity android:name=".LogInActivity">
+         <activity android:name=".LogInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
