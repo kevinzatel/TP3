@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,9 +9,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.constraintlayout.widget.Constraints;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -30,6 +35,7 @@ import javax.annotation.Nullable;
 public class MusicianRequests extends AppCompatActivity   {
 
     DataBaseHelper db;
+    TextView requestsEmtpy;
     public CollectionReference users;
     ListView lvRequests;
 
@@ -43,21 +49,22 @@ public class MusicianRequests extends AppCompatActivity   {
         setContentView(R.layout.activity_musician_requests);
 
         lvRequests = (ListView) findViewById(R.id.listRequests);
-        //lvRequests.setOnItemClickListener(this);
+        requestsEmtpy = findViewById(R.id.solicitudesEmpty);
 
         db = new DataBaseHelper();
         final User user = (User) getIntent().getSerializableExtra("user");
         String idmusician = user.getUserName();
-
-
-
         ArrayList<Requests> reqList =  db.getRequest(idmusician);
 
+        if(reqList == null || reqList.size()== 0) {
+            lvRequests.setVisibility(View.INVISIBLE);
+            requestsEmtpy.setVisibility(View.VISIBLE);
 
-        MusicianRequestAdapter reqAdapter = new MusicianRequestAdapter(MusicianRequests.this,R.layout.request_row,reqList);
-        lvRequests.setAdapter(reqAdapter);
-        reqAdapter.notifyDataSetChanged();
-
+        } else {
+            MusicianRequestAdapter reqAdapter = new MusicianRequestAdapter(MusicianRequests.this, R.layout.request_row, reqList);
+            lvRequests.setAdapter(reqAdapter);
+            reqAdapter.notifyDataSetChanged();
+        }
 
      /*   lvRequests.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

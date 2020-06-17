@@ -35,14 +35,6 @@ public class MusicianEditProfileActivity extends AppCompatActivity {
          msPhone =  findViewById(R.id.msPhone);
 
 
-       /* String userInstrument = user.getInstrument();
-        ArrayAdapter<CharSequence> adapterInstrument = ArrayAdapter.createFromResource(this, R.array.instrumentos, android.R.layout.simple_spinner_item);
-        adapterInstrument.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spInstrumento.setAdapter(adapterInstrument);
-        if (userInstrument != null) {
-            int spinnerPosition = adapterInstrument.getPosition(userInstrument);
-            spInstrumento.setSelection(spinnerPosition);
-        }*/
          msNombre.setText(user.getNickname());
          msPassword.setText(user.getPassword());
          msPhone.setText(user.getPhone());

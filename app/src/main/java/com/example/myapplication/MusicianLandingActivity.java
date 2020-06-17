@@ -8,20 +8,27 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
 public class MusicianLandingActivity extends AppCompatActivity {
 
     Button viewProfile,findBanda,mySolicitudes;
     TextView welcometxt;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_musician_landing_page);
 
+
          viewProfile = (Button) findViewById(R.id.btEditPerfil);
          findBanda = (Button) findViewById(R.id.btFindBanda);
          mySolicitudes = (Button) findViewById(R.id.btSolicitudes);
          welcometxt = findViewById(R.id.welcomeTxt);
+
         final User user = (User) getIntent().getSerializableExtra("user");
+
+
 
         welcometxt.setText("Bienvenido " + user.getNickname() + " !");
 
@@ -41,9 +48,14 @@ public class MusicianLandingActivity extends AppCompatActivity {
         mySolicitudes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent viewRequests = new Intent(getApplicationContext(),MusicianRequests.class);
+
+                               Intent viewRequests = new Intent(getApplicationContext(),MusicianRequests.class);
                 viewRequests.putExtra("user",user);
                 startActivity(viewRequests);
+
+
+
+
             }
         });
 
