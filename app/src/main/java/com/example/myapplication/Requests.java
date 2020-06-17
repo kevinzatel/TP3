@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 public class Requests implements Serializable {
 
-    private int Id;
     private String idBand;
     private String idMusician;
     private String state;
@@ -13,7 +12,12 @@ public class Requests implements Serializable {
     public Requests() {
     }
 
-
+    public Requests(String idBand, String idMusician, String state, String date) {
+        this.idBand = idBand;
+        this.idMusician = idMusician;
+        this.state = state;
+        this.Date = date;
+    }
 
     public String getIdBand() {
         return idBand;
@@ -39,14 +43,6 @@ public class Requests implements Serializable {
         this.state = state;
     }
 
-    public int getId() {
-        return Id;
-    }
-
-    public void setId(int id) {
-        Id = id;
-    }
-
     public String getDate() {
         return Date;
     }
@@ -54,14 +50,5 @@ public class Requests implements Serializable {
     public void setDate(String date) {
         Date = date;
     }
-
-    public Requests(int id, String idBand, String idMusician, String state, String date) {
-        Id = id;
-        this.idBand = idBand;
-        this.idMusician = idMusician;
-        this.state = state;
-        this.Date = date;
-    }
-
 
 }

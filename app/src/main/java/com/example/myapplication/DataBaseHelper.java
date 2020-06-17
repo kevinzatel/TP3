@@ -3,19 +3,17 @@ package com.example.myapplication;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-
-import javax.annotation.Nullable;
 
 public class DataBaseHelper {
 
     public FirebaseFirestore db;
-    public CollectionReference users;
+    public CollectionReference users, requests;
     public static final String USERS_COLLECTION_NAME = "users";
     public static final String REQUESTS_COLLECTION_NAME = "requests";
 
@@ -26,15 +24,41 @@ public class DataBaseHelper {
 
     private void setCollections(){
         users = db.collection(USERS_COLLECTION_NAME);
+        requests = db.collection(REQUESTS_COLLECTION_NAME);
     }
 
+    private String getFormattedDate() {
 
+        Date actualDate = new Date();
+        SimpleDateFormat dateFormatted = new SimpleDateFormat("dd/MM/yyyy");
+        String strDate = dateFormatted.format(actualDate);
+        return strDate;
+
+    }
 
     public boolean insertUser(String userName, String password, int isBand) {
 
         boolean bandFlag = isBand == 1 ? true : false;
         User user = new User(userName, password, bandFlag);
         Task<Void> task = users.document(user.getUserName()).set(user);
+
+        while (!task.isComplete()){}
+
+        if(task.isSuccessful())
+            return true;
+        else
+            return false;
+
+    }
+
+    public boolean insertRequest(String idBand, String idMusician) {
+
+        String state = "pendiente";
+        String date = getFormattedDate();
+
+        Requests request = new Requests(idBand, idMusician, state, date);
+
+        Task<Void> task = requests.document().set(request);
 
         while (!task.isComplete()){}
 
@@ -150,7 +174,6 @@ public class DataBaseHelper {
 
     public ArrayList<Requests> getRequest(String idmusician){
 
-
         ArrayList<Requests> requestsArrayList = null;
         Task<QuerySnapshot> task = db.collection(REQUESTS_COLLECTION_NAME)
 
@@ -174,8 +197,4 @@ public class DataBaseHelper {
         }
         return requestsArrayList;
     }
-
-
-
-
 }

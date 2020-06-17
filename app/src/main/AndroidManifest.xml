@@ -9,19 +9,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EditProfile1Activity"></activity>
+        <activity android:name=".EditProfile1Activity" />
         <activity android:name=".EditProfileActivity" />
         <activity android:name=".EditAccountActivity" />
         <activity android:name=".BandProfileActivity" />
+        <activity android:name=".BandDetailActivity" />
         <activity android:name=".MusicianProfileActivity" />
         <activity android:name=".MusicianFirstTimeActivity" />
         <activity android:name=".MusicianEditProfileActivity" />
+        <activity android:name=".MusicianBandSearchActivity" />
+        <activity android:name=".MusicianRequests" />
         <activity android:name=".BandFirstTimeActivity" />
         <activity android:name=".SearchMusicianActivity" />
         <activity android:name=".BandLandingPageActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".MusicianLandingActivity" />
-        <activity android:name=".LogInActivity">
+        <activity android:name=".LogInActivity"
+            android:theme="@style/SplashTheme">>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -45,7 +45,7 @@ public class MusicianRequestAdapter extends ArrayAdapter<Requests> {
             TextView idband =  view.findViewById(R.id.idBand);
             idband.setText(req.getIdBand());
 
-           //TextView state = (TextView) view.findViewById(R.id.State);
+            //TextView state = (TextView) view.findViewById(R.id.State);
             //state.setText(req.getState());
 
             TextView rqDate = (TextView) view.findViewById(R.id.rqDate);

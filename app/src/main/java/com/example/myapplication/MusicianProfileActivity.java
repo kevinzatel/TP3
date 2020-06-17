@@ -15,10 +15,10 @@ public class MusicianProfileActivity extends AppCompatActivity {
     Button btEditProfile,btBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_musician_profile);
+         super.onCreate(savedInstanceState);
+         setContentView(R.layout.activity_musician_profile);
 
-        final User user = (User) getIntent().getSerializableExtra("user");
+         final User user = (User) getIntent().getSerializableExtra("user");
 
          nombre =(TextView) findViewById(R.id.msNombre);
          btEditProfile = (Button) findViewById(R.id.btEditPerfil);
@@ -28,7 +28,7 @@ public class MusicianProfileActivity extends AppCompatActivity {
 
 
         nombre.setText(user.getNickname());
-        welcomeTxt.append("Bienvenido " + nombre.getText());
+        welcomeTxt.append("Bienvenido :)");
 
         phone.setText(user.getPhone());
         username.setText(user.getUserName());

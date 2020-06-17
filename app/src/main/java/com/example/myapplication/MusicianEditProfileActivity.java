@@ -1,15 +1,10 @@
 package com.example.myapplication;
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -18,8 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MusicianEditProfileActivity extends AppCompatActivity {
     DataBaseHelper db;
     EditText msNombre,msPassword,msPhone;
-    Button saveChanges,btBack;
-    String userId;
+    Button saveChanges;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,15 +60,13 @@ public class MusicianEditProfileActivity extends AppCompatActivity {
 
 
                                                     );
-                            Toast.makeText(MusicianEditProfileActivity.this, "Cambios realizadosss.", Toast.LENGTH_LONG).show();
+                            Toast.makeText(MusicianEditProfileActivity.this, "Cambios Realizados Exitosamente", Toast.LENGTH_LONG).show();
 
                         }
                         catch (Exception e){
 
-                            Toast.makeText(MusicianEditProfileActivity.this, "Error en conexión con base de datos.", Toast.LENGTH_LONG).show();
+                            Toast.makeText(MusicianEditProfileActivity.this, "Ocurrió un error interno. Intentá nuevamente", Toast.LENGTH_LONG).show();
                         }
-
-
 
                     }
             }
