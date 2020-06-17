@@ -8,6 +8,7 @@ public class User implements Serializable {
     private String userName;
     private String password;
     private String nickname;
+    private String address;
     private String latitude;
     private String longitude;
     private String district;
@@ -33,12 +34,14 @@ public class User implements Serializable {
         this.timeOfDay = null;
         this.phone = null;
         this.musicianSearching = null;
+        this.address = null;
     }
 
-    public User(String userName, String password, String nickname, String latitude, String longitude, String district, String instrument, String timeOfDay, String phone, boolean isBand, boolean active, ArrayList<String> musicianSearching) {
+    public User(String userName, String password, String nickname, String address, String latitude, String longitude, String district, String instrument, String timeOfDay, String phone, boolean isBand, boolean active, ArrayList<String> musicianSearching) {
         this.userName = userName;
         this.password = password;
         this.nickname = nickname;
+        this.address = address;
         this.latitude = latitude;
         this.longitude = longitude;
         this.district = district;
@@ -97,4 +100,12 @@ public class User implements Serializable {
     public ArrayList<String> getMusicianSearching() { return musicianSearching; }
 
     public void setMusicianSearching(ArrayList<String> musicianSearching) { this.musicianSearching = musicianSearching; }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 }

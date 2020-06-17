@@ -75,22 +75,24 @@ public class BandFirstTimeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 nickname = nicknameTxt.getText().toString();
                 phone = phoneTxt.getText().toString();
+                String streetAndNumber = addressTxt.getText().toString();
                 if(isUserFormValid(nickname, phone, address)){
                     ActivateBandProcess activateBandnAsyncTask = new ActivateBandProcess();
-                    String [] params = { userName, nickname, phone, timeOfDay, district, String.valueOf(address.getLatitude()), String.valueOf(address.getLongitude()) };
+                    String [] params = { userName, nickname, phone, timeOfDay, district, streetAndNumber, String.valueOf(address.getLatitude()), String.valueOf(address.getLongitude()) };
                     activateBandnAsyncTask.execute(params);
                 }
             }
         });
     }
 
-    private class ActivateBandProcess extends AsyncTask<String, Void, Boolean> {
+    public class ActivateBandProcess extends AsyncTask<String, Void, Boolean> {
 
         private String userName;
         private String nickname;
         private String phone;
         private String timeOfDay;
         private String district;
+        private String address;
         private String latitude;
         private String longitude;
 
@@ -109,10 +111,11 @@ public class BandFirstTimeActivity extends AppCompatActivity {
             this.phone = params[2];
             this.timeOfDay = params[3];
             this.district = params[4];
-            this.latitude = params[5];
-            this.longitude = params[6];
+            this.address = params[5];
+            this.latitude = params[6];
+            this.longitude = params[7];
 
-            boolean isCreated = db.activateBand(this.userName, this.nickname, this.phone, this.timeOfDay, this.district, this.latitude, this.longitude);
+            boolean isCreated = db.activateBand(this.userName, this.nickname, this.phone, this.timeOfDay, this.district, this.address, this.latitude, this.longitude);
 
             return isCreated;
         }
