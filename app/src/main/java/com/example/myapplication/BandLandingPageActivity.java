@@ -17,15 +17,16 @@ public class BandLandingPageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_band_landing_page);
 
         db = new DataBaseHelper();
-        final User user = (User) getIntent().getSerializableExtra("user");
-        final User updatedUser = db.getUser(user.getUserName());
+        final User updatedUser = (User) getIntent().getSerializableExtra("user");
+        //final User updatedUser = db.getUser(user.getUserName());
         Button findMusicianBtn = findViewById(R.id.findMusicianBtn);
         Button editSearchBtn = findViewById(R.id.editSearchBtn);
         Button desactivateSearchBtn = findViewById(R.id.desactivateSearchBtn);
-        Button goToProfileBtn = findViewById(R.id.goToProfileBtn);
+        Button editAccountBtn = findViewById(R.id.editAccountBtn);
+        Button editProfileBtn = findViewById(R.id.editProfileBtn);
         TextView welcomeText = (TextView) findViewById(R.id.welcomeTxt);
 
-        welcomeText.append(" " + user.getUserName());
+        welcomeText.append(" " + updatedUser.getNickname());
 
         if(updatedUser.getMusicianSearching() == null){
             editSearchBtn.setVisibility(View.GONE);
@@ -56,21 +57,31 @@ public class BandLandingPageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 db.desactivateMusicianSearch(updatedUser);
+                User user = db.getUser(updatedUser.getUserName());
                 finish();
-                Intent intent = getIntent().addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                Intent intent = new Intent(getApplicationContext(), BandLandingPageActivity.class);
+                intent.putExtra("user", user);
                 startActivity(intent);
             }
         });
 
-        goToProfileBtn.setOnClickListener(new View.OnClickListener() {
+        editAccountBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent bandProfileIntent = new Intent(getApplicationContext(), BandProfileActivity.class);
-                bandProfileIntent.putExtra("user", updatedUser);
-                startActivity(bandProfileIntent);
+                Intent editAccountIntent = new Intent(getApplicationContext(), EditAccountActivity.class);
+                editAccountIntent.putExtra("user", updatedUser);
+                startActivity(editAccountIntent);
             }
         });
 
+        editProfileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent editProfileIntent = new Intent(getApplicationContext(), EditProfileActivity.class);
+                editProfileIntent.putExtra("user", updatedUser);
+                startActivity(editProfileIntent);
+            }
+        });
     }
 
     private void goToSearchMusicianActivity(User user){

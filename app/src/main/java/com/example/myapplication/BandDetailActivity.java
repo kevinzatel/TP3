@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,9 +20,9 @@ public class BandDetailActivity extends AppCompatActivity {
     private User userLogged;
     private User userBand;
     private Button requestBtn;
-    private EditText bandNameTxt;
-    private EditText timeOfDayTxt;
-    private EditText districtTxt;
+    private TextView bandNameTxt;
+    private TextView timeOfDayTxt;
+    private TextView districtTxt;
     private ProgressBar progressBar;
     private ArrayList<User> externalData;
 
@@ -36,9 +37,9 @@ public class BandDetailActivity extends AppCompatActivity {
         externalData = (ArrayList<User>) getIntent().getSerializableExtra("data");
         userLogged = (User) externalData.get(0);
         userBand = (User) externalData.get(1);
-        bandNameTxt = (EditText) findViewById(R.id.bandDetailNameTxt);
-        timeOfDayTxt = (EditText) findViewById(R.id.bandDetailDayTime);
-        districtTxt = (EditText) findViewById(R.id.bandDetailDistrictTxt);
+        bandNameTxt = (TextView) findViewById(R.id.bandDetailNameTxt);
+        timeOfDayTxt = (TextView) findViewById(R.id.bandDetailDayTime);
+        districtTxt = (TextView) findViewById(R.id.bandDetailDistrictTxt);
         requestBtn = (Button) findViewById(R.id.sendRequestBtn);
         progressBar = (ProgressBar) findViewById(R.id.bandDetailProgressBar);
 

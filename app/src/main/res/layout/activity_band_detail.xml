@@ -12,21 +12,23 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
-    <EditText
+    <TextView
         android:id="@+id/bandDetailDistrictTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="40dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bandDetailDayTime" />
 
-    <EditText
+    <TextView
         android:id="@+id/bandDetailDayTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="40dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,11 +44,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/lets_play_title" />
 
-    <EditText
+    <TextView
         android:id="@+id/bandDetailNameTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="55dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -56,7 +59,7 @@
         android:id="@+id/bandDetailNameImg"
         android:layout_width="45dp"
         android:layout_height="50dp"
-        android:layout_marginTop="47dp"
+        android:layout_marginTop="45dp"
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
         app:layout_constraintEnd_toStartOf="@+id/bandDetailNameTxt"
@@ -67,7 +70,7 @@
         android:id="@+id/imageView7"
         android:layout_width="69dp"
         android:layout_height="43dp"
-        android:layout_marginTop="34dp"
+        android:layout_marginTop="35dp"
         app:layout_constraintEnd_toStartOf="@+id/bandDetailDayTime"
         app:layout_constraintTop_toBottomOf="@+id/bandDetailNameTxt"
         app:srcCompat="@drawable/time_icon" />
@@ -76,7 +79,7 @@
         android:id="@+id/imageView8"
         android:layout_width="43dp"
         android:layout_height="46dp"
-        android:layout_marginTop="33dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
         app:layout_constraintEnd_toStartOf="@+id/bandDetailDistrictTxt"

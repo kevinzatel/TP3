@@ -57,9 +57,9 @@ public class DataBaseHelper {
             return false;
     }
 
-    public boolean activateBand(String userName, String nickname, String phone, String timeOfDay, String district, String latitude, String longitude){
+    public boolean activateBand(String userName, String nickname, String phone, String timeOfDay, String district, String address, String latitude, String longitude){
 
-        Task<Void> task = users.document(userName).update("nickname", nickname, "phone", phone, "timeOfDay", timeOfDay, "district", district, "latitude", latitude, "longitude", longitude, "active", true);
+        Task<Void> task = users.document(userName).update("nickname", nickname, "phone", phone, "timeOfDay", timeOfDay, "district", district, "address", address, "latitude", latitude, "longitude", longitude, "active", true);
 
         while (!task.isComplete()){}
 
@@ -67,6 +67,16 @@ public class DataBaseHelper {
             return true;
         else
             return false;
+    }
+
+    public void updateBandAccount(User user, String userName, String password ){
+        users.document(user.getUserName()).delete();
+        users.document(userName).set(user);
+        users.document(userName).update("userName", userName, "password", password);
+    }
+
+    public void updateBandProfile(User user, String nickName, String phone, String address, String latitude, String longitude, String district, String timeOfDay){
+        users.document(user.getUserName()).update("nickname", nickName, "phone", phone, "address", address, "latitude", latitude, "longitude", longitude, "district", district, "timeOfDay", timeOfDay);
     }
 
     public void activateMusicianSearch(User user, ArrayList<String> selectedMusicians){

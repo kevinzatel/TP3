@@ -22,18 +22,18 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
         android:text="Buscar Músico"
-        app:layout_constraintBottom_toTopOf="@+id/goToProfileBtn"
+        app:layout_constraintBottom_toTopOf="@+id/editAccountBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/welcomeTxt" />
 
     <Button
-        android:id="@+id/goToProfileBtn"
+        android:id="@+id/editAccountBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="284dp"
-        android:text="Ver mi perfil"
+        android:text="Editar Cuenta"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +47,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:text="Desactivar Búsqueda"
-        app:layout_constraintBottom_toTopOf="@+id/goToProfileBtn"
+        app:layout_constraintBottom_toTopOf="@+id/editAccountBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -57,9 +57,20 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="128dp"
         android:text="Editar Búsqueda"
-        app:layout_constraintBottom_toTopOf="@+id/goToProfileBtn"
+        app:layout_constraintBottom_toTopOf="@+id/editAccountBtn"
         app:layout_constraintEnd_toStartOf="@+id/desactivateSearchBtn"
         app:layout_constraintHorizontal_bias="0.384"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/editProfileBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Editar perfil"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editAccountBtn" />
 </androidx.constraintlayout.widget.ConstraintLayout>

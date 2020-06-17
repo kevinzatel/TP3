@@ -61,8 +61,9 @@ public class SearchMusicianActivity extends AppCompatActivity {
                             Toast.makeText(SearchMusicianActivity.this, "Error en conexión con base de datos.", Toast.LENGTH_LONG).show();
                         }
                         finally {
+                            User updatedUser = db.getUser(user.getUserName());
                             Intent landingIntent = new Intent(getApplicationContext(), BandLandingPageActivity.class);
-                            landingIntent.putExtra("user", user);
+                            landingIntent.putExtra("user", updatedUser);
                             startActivity(landingIntent);
                         }
                     }
