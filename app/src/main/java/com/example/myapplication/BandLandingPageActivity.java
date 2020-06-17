@@ -57,8 +57,10 @@ public class BandLandingPageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 db.desactivateMusicianSearch(updatedUser);
+                User user = db.getUser(updatedUser.getUserName());
                 finish();
-                Intent intent = getIntent().addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                Intent intent = new Intent(getApplicationContext(), BandLandingPageActivity.class);
+                intent.putExtra("user", user);
                 startActivity(intent);
             }
         });
