@@ -31,7 +31,7 @@ public class MusicianFirstTimeActivity extends AppCompatActivity {
         progressBarMusician = (ProgressBar) findViewById(R.id.progressBarMusicianFirst);
         createBtn = (Button) findViewById(R.id.createMusicianBtn);
 
-        progressBarMusician.setVisibility(View.GONE);
+        progressBarMusician.setVisibility(View.INVISIBLE);
 
         activateUser();
 
@@ -81,7 +81,7 @@ public class MusicianFirstTimeActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean isCreated) {
 
-            progressBarMusician.setVisibility(View.GONE);
+            progressBarMusician.setVisibility(View.INVISIBLE);
             createBtn.setEnabled(true);
 
             if(isCreated) {
