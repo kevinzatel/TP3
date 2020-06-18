@@ -11,6 +11,7 @@
         <activity android:name=".EditProfile1Activity" />
         <activity android:name=".EditProfileActivity" />
         <activity android:name=".EditAccountActivity" />
+        <activity android:name=".MusicianRequestDetailActivity" />
         <activity android:name=".BandProfileActivity" />
         <activity android:name=".BandDetailActivity" />
         <activity android:name=".MusicianProfileActivity" />
