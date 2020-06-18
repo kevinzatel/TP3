@@ -110,6 +110,9 @@ public class DataBaseHelper {
     public void editMusicianProfile(User user, String nombre, String password,String Phone) {
         users.document(user.getUserName()).update("nickname",nombre,"password",password,"phone",Phone);
     }
+    public void editBandRequest(Requests req,String state){
+        requests.document(req.getIdBand()).update("state",state);
+    }
 
     public void desactivateMusicianSearch(User user){
         users.document(user.getUserName()).update("musicianSearching", null);
@@ -172,12 +175,40 @@ public class DataBaseHelper {
         return usersList;
     }
 
-    public ArrayList<Requests> getRequest(String idmusician){
+    public ArrayList<Requests> getRequestMusician(String idmusician){
 
         ArrayList<Requests> requestsArrayList = null;
         Task<QuerySnapshot> task = db.collection(REQUESTS_COLLECTION_NAME)
 
                 .whereEqualTo("idMusician",idmusician)
+                .get();
+
+        while (!task.isComplete()) {}
+
+        if (task.isSuccessful()) {
+            QuerySnapshot queryDocumentSnapshots = task.getResult();
+
+            if (!queryDocumentSnapshots.isEmpty()) {
+                List<DocumentSnapshot> reqList = queryDocumentSnapshots.getDocuments();
+                requestsArrayList = new ArrayList<Requests>();
+
+                for(DocumentSnapshot u : reqList){
+                    Requests readedReq = u.toObject(Requests.class);
+                    requestsArrayList.add(readedReq);
+                }
+            }
+        }
+        return requestsArrayList;
+    }
+
+
+
+    public ArrayList<Requests> getRequestBand(String idband){
+
+        ArrayList<Requests> requestsArrayList = null;
+        Task<QuerySnapshot> task = db.collection(REQUESTS_COLLECTION_NAME)
+
+                .whereEqualTo("idBand",idband)
                 .get();
 
         while (!task.isComplete()) {}
