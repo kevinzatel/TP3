@@ -1,40 +1,51 @@
 package com.example.myapplication;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.firestore.CollectionReference;
+
 import java.util.ArrayList;
 
-public class MusicianRequests extends AppCompatActivity   {
+public class BandRequestsActivity extends AppCompatActivity   {
 
     DataBaseHelper db;
     TextView requestsEmtpy;
     public CollectionReference users;
     ListView lvRequests;
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_musician_requests);
+        setContentView(R.layout.activity_band_requests);
 
         lvRequests = (ListView) findViewById(R.id.listRequests);
         requestsEmtpy = findViewById(R.id.solicitudesEmpty);
 
         db = new DataBaseHelper();
         final User user = (User) getIntent().getSerializableExtra("user");
-        String idmusician = user.getUserName();
-        ArrayList<Requests> reqList =  db.getRequestMusician(idmusician);
+        String idband = user.getUserName();
+
+        ArrayList<Requests> reqList =  db.getRequestBand(idband);
+
+        Log.i("CANTIDA DE BANDAS", String.valueOf(reqList.size()));
+
 
         if(reqList == null || reqList.size()== 0) {
             lvRequests.setVisibility(View.INVISIBLE);
             requestsEmtpy.setVisibility(View.VISIBLE);
 
         } else {
-            MusicianRequestAdapter reqAdapter = new MusicianRequestAdapter(MusicianRequests.this, reqList);
+            BandRequestAdapter  reqAdapter = new BandRequestAdapter(BandRequestsActivity.this, reqList);
             lvRequests.setAdapter(reqAdapter);
             reqAdapter.notifyDataSetChanged();
         }
@@ -47,6 +58,11 @@ public class MusicianRequests extends AppCompatActivity   {
 
             }
         });*/
+
+
+
             }
+
+
 
 }

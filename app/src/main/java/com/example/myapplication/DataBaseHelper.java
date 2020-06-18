@@ -172,7 +172,7 @@ public class DataBaseHelper {
         return usersList;
     }
 
-    public ArrayList<Requests> getRequest(String idmusician){
+    public ArrayList<Requests> getRequestMusician(String idmusician){
 
         ArrayList<Requests> requestsArrayList = null;
         Task<QuerySnapshot> task = db.collection(REQUESTS_COLLECTION_NAME)
@@ -197,4 +197,33 @@ public class DataBaseHelper {
         }
         return requestsArrayList;
     }
+
+    /*getRequestBand*/
+
+    public ArrayList<Requests> getRequestBand(String idband){
+
+        ArrayList<Requests> requestsArrayList = null;
+        Task<QuerySnapshot> task = db.collection(REQUESTS_COLLECTION_NAME)
+
+                .whereEqualTo("idBand",idband)
+                .get();
+
+        while (!task.isComplete()) {}
+
+        if (task.isSuccessful()) {
+            QuerySnapshot queryDocumentSnapshots = task.getResult();
+
+            if (!queryDocumentSnapshots.isEmpty()) {
+                List<DocumentSnapshot> reqList = queryDocumentSnapshots.getDocuments();
+                requestsArrayList = new ArrayList<Requests>();
+
+                for(DocumentSnapshot u : reqList){
+                    Requests readedReq = u.toObject(Requests.class);
+                    requestsArrayList.add(readedReq);
+                }
+            }
+        }
+        return requestsArrayList;
+    }
+
 }

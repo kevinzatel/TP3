@@ -16,16 +16,21 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class MusicianRequestAdapter extends BaseAdapter implements ListAdapter {
+public class BandRequestAdapter extends BaseAdapter implements ListAdapter {
 
     private ArrayList<Requests> reqList;
     private Context mContext;
+    private  int resourceLayout;
+    DataBaseHelper db;
+    User user;
 
-    public MusicianRequestAdapter(Context context, ArrayList<Requests> objects) {
+    public BandRequestAdapter(@NonNull Context context,  ArrayList<Requests> objects) {
+
+
         this.reqList = objects;
         this.mContext = context;
+
     }
 
     @Override
@@ -43,33 +48,43 @@ public class MusicianRequestAdapter extends BaseAdapter implements ListAdapter {
         return 0;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
         View view = convertView;
 
         if(view==null) {
-            LayoutInflater LayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);//context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = LayoutInflater.inflate(R.layout.request_row, null);
+            LayoutInflater LayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = LayoutInflater.from(mContext).inflate(R.layout.band_request_row, null);
         }
             Requests req = reqList.get(position);
 
             TextView idband =  view.findViewById(R.id.idBand);
-            idband.setText(req.getIdBand());
+            idband.setText(req.getIdMusician());
+
+
+
             TextView rqDate = (TextView) view.findViewById(R.id.rqDate);
             rqDate.setText(req.getDate());
-            Button boton = (Button) view.findViewById(R.id.button);
-            boton.setText(req.getState());
 
-            if(req.getState().equals("pendiente")){
-               boton.setBackgroundResource(R.drawable.custom_button_pending);
+
+
+            
+         /*   if(req.getState().equals("pendiente")){
+               boton.setBackgroundResource(R.drawable.custom_button);
                } else if (req.getState().equals("aceptada")){
                 boton.setBackgroundResource(R.drawable.custom_button_ok);
+
                 } else {
-                boton.setBackgroundResource(R.drawable.custom_button_reject);
-            }
+                boton.setBackgroundResource(R.drawable.custom_button_rejected);
+            }*/
+
 
             return view;
+
+
 
     }
 }
