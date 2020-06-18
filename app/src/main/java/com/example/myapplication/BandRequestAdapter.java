@@ -6,7 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,7 +17,7 @@ import androidx.annotation.RequiresApi;
 
 import java.util.ArrayList;
 
-public class BandRequestAdapter extends ArrayAdapter<Requests> {
+public class BandRequestAdapter extends BaseAdapter implements ListAdapter {
 
     private ArrayList<Requests> reqList;
     private Context mContext;
@@ -23,11 +25,27 @@ public class BandRequestAdapter extends ArrayAdapter<Requests> {
     DataBaseHelper db;
     User user;
 
-    public BandRequestAdapter(@NonNull Context context, int resource, ArrayList<Requests> objects) {
-        super(context, resource, objects);
+    public BandRequestAdapter(@NonNull Context context,  ArrayList<Requests> objects) {
+
+
         this.reqList = objects;
         this.mContext = context;
-        this.resourceLayout = resource;
+
+    }
+
+    @Override
+    public int getCount() {
+        return reqList.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return reqList.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return 0;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -43,7 +61,6 @@ public class BandRequestAdapter extends ArrayAdapter<Requests> {
         }
             Requests req = reqList.get(position);
 
-
             TextView idband =  view.findViewById(R.id.idBand);
             idband.setText(req.getIdMusician());
 
@@ -52,9 +69,6 @@ public class BandRequestAdapter extends ArrayAdapter<Requests> {
             TextView rqDate = (TextView) view.findViewById(R.id.rqDate);
             rqDate.setText(req.getDate());
 
-         //   final Button boton = (Button) view.findViewById(R.id.button);
-
-//            boton.setText(req.getState());
 
 
             

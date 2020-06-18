@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -33,14 +34,18 @@ public class BandRequestsActivity extends AppCompatActivity   {
         db = new DataBaseHelper();
         final User user = (User) getIntent().getSerializableExtra("user");
         String idband = user.getUserName();
+
         ArrayList<Requests> reqList =  db.getRequestBand(idband);
+
+        Log.i("CANTIDA DE BANDAS", String.valueOf(reqList.size()));
+
 
         if(reqList == null || reqList.size()== 0) {
             lvRequests.setVisibility(View.INVISIBLE);
             requestsEmtpy.setVisibility(View.VISIBLE);
 
         } else {
-            BandRequestAdapter  reqAdapter = new BandRequestAdapter(BandRequestsActivity.this, R.layout.request_row, reqList);
+            BandRequestAdapter  reqAdapter = new BandRequestAdapter(BandRequestsActivity.this, reqList);
             lvRequests.setAdapter(reqAdapter);
             reqAdapter.notifyDataSetChanged();
         }
