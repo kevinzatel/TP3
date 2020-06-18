@@ -141,10 +141,10 @@ public class DataBaseHelper {
         return user;
     }
 
-    public ArrayList<User> getBand(String user, String instrument, String district, String timeOfDay){
+    public ArrayList<User> getBand(String instrument, String district, String timeOfDay){
 
         ArrayList<User> usersList = null;
-        ArrayList<Requests> requestsList = null;
+
 
         Task<QuerySnapshot> task = db.collection(USERS_COLLECTION_NAME)
                 .whereEqualTo("active", true)
@@ -169,70 +169,14 @@ public class DataBaseHelper {
                 }
             }
         }
-
-        Task<QuerySnapshot> task2 = db.collection(REQUESTS_COLLECTION_NAME)
-                .whereEqualTo("idMusician", user)
-                .whereEqualTo("state", "pendiente")
-                .get();
-
-        while (!task2.isComplete()) {}
-
-        if (task2.isSuccessful()) {
-            QuerySnapshot queryDocumentSnapshots2 = task2.getResult();
-            if (!queryDocumentSnapshots2.isEmpty()) {
-
-                List<DocumentSnapshot> requestList = queryDocumentSnapshots2.getDocuments();
-                requestsList = new ArrayList<Requests>();
-
-                for(DocumentSnapshot r : requestList){
-                    Requests readedRequest = r.toObject(Requests.class);
-                    requestsList.add(readedRequest);
-                }
-            }
-        }
-
-        Task<QuerySnapshot> task3 = db.collection(REQUESTS_COLLECTION_NAME)
-                .whereEqualTo("idMusician", user)
-                .whereEqualTo("state", "aceptada")
-                .get();
-
-        while (!task3.isComplete()) {}
-
-        if (task3.isSuccessful()) {
-            QuerySnapshot queryDocumentSnapshots3 = task3.getResult();
-            if (!queryDocumentSnapshots3.isEmpty()) {
-
-                List<DocumentSnapshot> requestList2 = queryDocumentSnapshots3.getDocuments();
-
-                if(requestsList == null){
-                    requestsList = new ArrayList<Requests>();
-                }
-
-                for(DocumentSnapshot r2 : requestList2){
-                    Requests readedRequest2 = r2.toObject(Requests.class);
-                    requestsList.add(readedRequest2);
-                }
-            }
-        }
-
-        if (usersList != null && requestsList != null){
-            for(Requests req : requestsList){
-                String bandId = req.getIdBand();
-                for(int i = 0; i < usersList.size(); i++){
-                    if(usersList.get(i).getUserName().equals(bandId)){
-                        usersList.remove(i);
-                    }
-                }
-            }
-        }
-
         return usersList;
     }
 
-    public ArrayList<Requests> getRequest(String idmusician){
+    public ArrayList<Requests> getRequestMusician(String idmusician){
 
         ArrayList<Requests> requestsArrayList = null;
         Task<QuerySnapshot> task = db.collection(REQUESTS_COLLECTION_NAME)
+
                 .whereEqualTo("idMusician",idmusician)
                 .get();
 
@@ -253,4 +197,33 @@ public class DataBaseHelper {
         }
         return requestsArrayList;
     }
+
+    /*getRequestBand*/
+
+    public ArrayList<Requests> getRequestBand(String idband){
+
+        ArrayList<Requests> requestsArrayList = null;
+        Task<QuerySnapshot> task = db.collection(REQUESTS_COLLECTION_NAME)
+
+                .whereEqualTo("idBand",idband)
+                .get();
+
+        while (!task.isComplete()) {}
+
+        if (task.isSuccessful()) {
+            QuerySnapshot queryDocumentSnapshots = task.getResult();
+
+            if (!queryDocumentSnapshots.isEmpty()) {
+                List<DocumentSnapshot> reqList = queryDocumentSnapshots.getDocuments();
+                requestsArrayList = new ArrayList<Requests>();
+
+                for(DocumentSnapshot u : reqList){
+                    Requests readedReq = u.toObject(Requests.class);
+                    requestsArrayList.add(readedReq);
+                }
+            }
+        }
+        return requestsArrayList;
+    }
+
 }

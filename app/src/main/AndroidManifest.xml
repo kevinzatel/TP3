@@ -20,6 +20,9 @@
         <activity android:name=".MusicianBandSearchActivity" />
         <activity android:name=".MusicianRequests" />
         <activity android:name=".BandFirstTimeActivity" />
+        <activity android:name=".BandRequestsActivity" />
+        <activity android:name=".BandRequestAdapter" />
+
         <activity android:name=".SearchMusicianActivity" />
         <activity android:name=".BandLandingPageActivity" />
         <activity android:name=".SignUpActivity" />

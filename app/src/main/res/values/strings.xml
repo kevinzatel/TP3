@@ -4,6 +4,11 @@
         <item>Músico</item>
         <item>Banda</item>
     </string-array>
+    <string-array name="requestType">
+        <item>Pendiente</item>
+        <item>Aprobada</item>
+        <item>Rechazada</item>
+    </string-array>
     <string-array name="instrumentos">
         <item>Guitarra</item>
         <item>Piano</item>

@@ -24,6 +24,7 @@ public class BandLandingPageActivity extends AppCompatActivity {
         Button desactivateSearchBtn = findViewById(R.id.desactivateSearchBtn);
         Button editAccountBtn = findViewById(R.id.editAccountBtn);
         Button editProfileBtn = findViewById(R.id.editProfileBtn);
+        Button btRequests = findViewById(R.id.btRequests);
         TextView welcomeText = (TextView) findViewById(R.id.welcomeTxt);
 
         welcomeText.append(" " + updatedUser.getNickname());
@@ -82,6 +83,17 @@ public class BandLandingPageActivity extends AppCompatActivity {
                 startActivity(editProfileIntent);
             }
         });
+        btRequests.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent requestsIntent = new Intent(getApplicationContext(),BandRequestsActivity.class);
+                requestsIntent.putExtra("user",updatedUser);
+                startActivity(requestsIntent);
+
+            }
+        });
+
     }
 
     private void goToSearchMusicianActivity(User user){
