@@ -37,7 +37,7 @@ public class BandRequestsActivity extends AppCompatActivity   {
 
         ArrayList<Requests> reqList =  db.getRequestBand(idband);
 
-        Log.i("CANTIDA DE BANDAS", String.valueOf(reqList.size()));
+
 
 
         if(reqList == null || reqList.size()== 0) {
