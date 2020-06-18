@@ -29,6 +29,7 @@ public class EditProfileActivity extends AppCompatActivity {
     Address address;
     ImageView checkOkIcon;
     ArrayAdapter<String> districtAdapter, timeOfDayAdapter;
+    ProgressBar progressBarBand;
 
 
     @Override
@@ -47,6 +48,7 @@ public class EditProfileActivity extends AppCompatActivity {
         districtDropDown = findViewById(R.id.editLocalidadDrop);
         checkOkIcon = findViewById(R.id.checkOkImg);
         searchAdressBtn = findViewById(R.id.validarDireccionBtn);
+        progressBarBand = findViewById(R.id.editProfileProgressBar);
 
         fillDropDowns();
         fillInitialValues(user);
@@ -198,7 +200,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-
+            progressBarBand.setVisibility(View.VISIBLE);
             checkOkIcon.setVisibility(View.GONE);
             guardarBtn.setEnabled(false);
             searchAdressBtn.setEnabled(false);
@@ -214,7 +216,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Address responseAddress) {
-
+            progressBarBand.setVisibility(View.INVISIBLE);
             guardarBtn.setEnabled(true);
             searchAdressBtn.setEnabled(true);
 

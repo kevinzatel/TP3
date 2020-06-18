@@ -35,9 +35,10 @@ public class EditAccountActivity extends AppCompatActivity {
                 String password = passwordTxt.getText().toString();
                 String confirmPassword = confirmPasswordTxt.getText().toString();
 
-                if(isUserFormValid(userName, password, confirmPassword)){
+                if(isUserFormValid(user, userName, password, confirmPassword)){
                     try{
                         db.updateBandAccount(user, userName, password);
+                        Toast.makeText(EditAccountActivity.this, "Datos actualizados correctamente", Toast.LENGTH_LONG).show();
                         volver(userName);
                     }catch(Exception ex)
                     {
@@ -66,7 +67,7 @@ public class EditAccountActivity extends AppCompatActivity {
         emailTxt.setText(user.getUserName());
     }
 
-    private boolean isUserFormValid(String userName, String password, String confirmPassword){
+    private boolean isUserFormValid(User user, String userName, String password, String confirmPassword){
 
         Boolean isValid = true;
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
@@ -77,10 +78,12 @@ public class EditAccountActivity extends AppCompatActivity {
         } else if (!(userName.trim().matches(emailPattern))){
             emailTxt.setError("Por favor, ingresá una email valido");
             isValid = false;
-        } else if(db.getUser(userName) != null){
+        }
+        else if(!user.getUserName().equals(userName) && db.getUser(userName) != null){
             emailTxt.setError("Este usuario ya esta registrado. Ingresá otro");
-            isValid = false;
-        } else {
+           isValid = false;
+        }
+        else {
             emailTxt.setError(null);
         }
         if(password.isEmpty()){
