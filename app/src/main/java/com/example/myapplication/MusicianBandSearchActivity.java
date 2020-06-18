@@ -86,7 +86,7 @@ public class MusicianBandSearchActivity extends AppCompatActivity {
             this.timeOfDayValue = params[1];
             this.districtValue = params[2];
 
-            ArrayList<User> usersList = db.getBand(instrumentValue, districtValue, timeOfDayValue);
+            ArrayList<User> usersList = db.getBand(user.getUserName(), instrumentValue, districtValue, timeOfDayValue);
             bandsList = usersList;
 
             return usersList;

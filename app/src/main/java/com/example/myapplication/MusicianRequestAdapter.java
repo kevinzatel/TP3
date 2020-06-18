@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,7 +45,7 @@ public class MusicianRequestAdapter extends BaseAdapter implements ListAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         View view = convertView;
 
@@ -52,7 +53,7 @@ public class MusicianRequestAdapter extends BaseAdapter implements ListAdapter {
             LayoutInflater LayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);//context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = LayoutInflater.inflate(R.layout.request_row, null);
         }
-            Requests req = reqList.get(position);
+            final Requests req = reqList.get(position);
 
             TextView idband =  view.findViewById(R.id.idBand);
             idband.setText(req.getIdBand());
@@ -65,6 +66,14 @@ public class MusicianRequestAdapter extends BaseAdapter implements ListAdapter {
                boton.setBackgroundResource(R.drawable.custom_button_pending);
                } else if (req.getState().equals("aceptada")){
                 boton.setBackgroundResource(R.drawable.custom_button_ok);
+                boton.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {
+                        Intent requestDetailIntent = new Intent(mContext, MusicianRequestDetailActivity.class);
+                        requestDetailIntent.putExtra("request", req);
+                        mContext.startActivity(requestDetailIntent);
+                    }
+                });
                 } else {
                 boton.setBackgroundResource(R.drawable.custom_button_reject);
             }

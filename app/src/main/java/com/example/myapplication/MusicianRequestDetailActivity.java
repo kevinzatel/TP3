@@ -28,9 +28,9 @@ public class MusicianRequestDetailActivity extends AppCompatActivity {
         setContentView(R.layout.musician_request_detail_activity);
         db = new DataBaseHelper();
         googleMapView = (MapView) findViewById(R.id.mapViewDetail);
-        address = (TextView) findViewById(R.id.signUpLink);
-        email = (TextView) findViewById(R.id.signUpLink);
-        phone = (TextView) findViewById(R.id.signUpLink);
+        address = (TextView) findViewById(R.id.emailRequestDetailTxt);
+        email = (TextView) findViewById(R.id.addressRequestDetailTxt);
+        phone = (TextView) findViewById(R.id.phoneRequestDetail);
         progressBar = (ProgressBar) findViewById(R.id.progressBarDetail);
         request = (Requests) getIntent().getSerializableExtra("request");
 
@@ -51,7 +51,6 @@ public class MusicianRequestDetailActivity extends AppCompatActivity {
         protected User doInBackground(Void... voids) {
 
             User user = db.getUser(request.getIdBand());
-
             return user;
 
         }
@@ -64,10 +63,10 @@ public class MusicianRequestDetailActivity extends AppCompatActivity {
                 Toast.makeText(MusicianRequestDetailActivity.this, "Ocurrió un error interno. Intentá nuevamente", Toast.LENGTH_LONG).show();
             }
             else {
-                address.setText(user.getAddress() + " " + user.getDistrict());
+                address.setText(user.getAddress() + ", " + user.getDistrict());
                 email.setText(user.getUserName());
                 phone.setText(user.getPhone());
-                //Set position on map
+                //SET POSITION ON MAP
                 progressBar.setVisibility(View.INVISIBLE);
                 googleMapView.setVisibility(View.VISIBLE);
             }
