@@ -71,6 +71,7 @@ public class MusicianBandSearchActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
+            noResultsImg.setVisibility(View.GONE);
             progressBarSearch.setVisibility(View.VISIBLE);
             searchBandBtn.setVisibility(View.INVISIBLE);
             districtDropDown.setEnabled(false);
@@ -85,7 +86,7 @@ public class MusicianBandSearchActivity extends AppCompatActivity {
             this.timeOfDayValue = params[1];
             this.districtValue = params[2];
 
-            ArrayList<User> usersList = db.getBand(instrumentValue, districtValue, timeOfDayValue);
+            ArrayList<User> usersList = db.getBand(user.getUserName(), instrumentValue, districtValue, timeOfDayValue);
             bandsList = usersList;
 
             return usersList;
@@ -101,7 +102,6 @@ public class MusicianBandSearchActivity extends AppCompatActivity {
             instrumentDropDown.setEnabled(true);
 
             if(bands!=null) {
-                noResultsImg.setVisibility(View.GONE);
                 BandSearchAdapter bandAdapter = new BandSearchAdapter(user, bands, MusicianBandSearchActivity.this);
                 bandsListView.setAdapter(bandAdapter);
                 ((BaseAdapter) bandAdapter).notifyDataSetChanged();
