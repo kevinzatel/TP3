@@ -48,23 +48,20 @@ public class BandRequestAdapter extends BaseAdapter implements ListAdapter {
         return 0;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-    @NonNull
-    @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
+    public View getView(int position,  View convertView,  ViewGroup parent) {
 
         View view = convertView;
 
         if(view==null) {
             LayoutInflater LayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = LayoutInflater.from(mContext).inflate(R.layout.band_request_row, null);
+            //view = LayoutInflater.from(mContext).inflate(R.layout.band_request_row, null);
+            view = LayoutInflater.inflate(R.layout.band_request_row, null);
         }
             Requests req = reqList.get(position);
 
             TextView idband =  view.findViewById(R.id.idBand);
             idband.setText(req.getIdMusician());
-
-
 
             TextView rqDate = (TextView) view.findViewById(R.id.rqDate);
             rqDate.setText(req.getDate());
