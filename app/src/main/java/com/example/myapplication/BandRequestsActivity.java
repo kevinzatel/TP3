@@ -16,11 +16,7 @@ public class BandRequestsActivity extends AppCompatActivity   {
 
     DataBaseHelper db;
     TextView requestsEmtpy;
-    public CollectionReference users;
     ListView lvRequests;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +33,6 @@ public class BandRequestsActivity extends AppCompatActivity   {
 
         ArrayList<Requests> reqList =  db.getRequestBand(idband);
 
-
-
-
         if(reqList == null || reqList.size()== 0) {
             lvRequests.setVisibility(View.INVISIBLE);
             requestsEmtpy.setVisibility(View.VISIBLE);
@@ -50,18 +43,7 @@ public class BandRequestsActivity extends AppCompatActivity   {
             reqAdapter.notifyDataSetChanged();
         }
 
-     /*   lvRequests.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent requestDetailIntent = new Intent(view.getContext(),MusicianRequestDetailActivity.class);
-                requestDetailIntent.putExtra("request",)
-
-            }
-        });*/
-
-
-
-            }
+    }
 
 
 

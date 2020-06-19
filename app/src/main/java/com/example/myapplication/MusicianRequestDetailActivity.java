@@ -9,12 +9,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MusicianRequestDetailActivity extends AppCompatActivity {
 
     private DataBaseHelper db;
     private MapView googleMapView;
-    private GoogleMap googleMap;
+    //private GoogleMap googleMap;
     private TextView address;
     private TextView email;
     private TextView phone;
@@ -28,6 +30,7 @@ public class MusicianRequestDetailActivity extends AppCompatActivity {
         setContentView(R.layout.musician_request_detail_activity);
         db = new DataBaseHelper();
         googleMapView = (MapView) findViewById(R.id.mapViewDetail);
+        //googleMap = googleMapView.getMapAsync();
         address = (TextView) findViewById(R.id.emailRequestDetailTxt);
         email = (TextView) findViewById(R.id.addressRequestDetailTxt);
         phone = (TextView) findViewById(R.id.phoneRequestDetail);
@@ -66,7 +69,7 @@ public class MusicianRequestDetailActivity extends AppCompatActivity {
                 address.setText(user.getAddress() + ", " + user.getDistrict());
                 email.setText(user.getUserName());
                 phone.setText(user.getPhone());
-                //SET POSITION ON MAP
+                //googleMap.addMarker(new MarkerOptions().position(new LatLng(user.getLongitude(), user.getLongitude())).title("Banda"));
                 progressBar.setVisibility(View.INVISIBLE);
                 googleMapView.setVisibility(View.VISIBLE);
             }
