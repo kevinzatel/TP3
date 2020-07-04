@@ -14,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class LogInActivity extends AppCompatActivity {
 
+    private Session session;
+    private String sessionUsername;
     private DataBaseHelper db;
     private Button signInBtn;
     private TextView signUpLink;
@@ -26,8 +28,27 @@ public class LogInActivity extends AppCompatActivity {
 
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         db = new DataBaseHelper();
+        session = new Session(getApplicationContext());
+        sessionUsername = session.getSessionUsername();
+
+        if (sessionUsername != null && !sessionUsername.equals("")){
+
+            Intent landingIntent;
+            User userSession = db.getUser(sessionUsername.trim());
+
+            if(userSession.isBand()){
+                landingIntent = new Intent(getApplicationContext(), BandLandingPageActivity.class);
+                landingIntent.putExtra("user", userSession);
+            }
+            else{
+                landingIntent = new Intent(getApplicationContext(), MusicianLandingActivity.class);
+                landingIntent.putExtra("user", userSession);
+            }
+            startActivity(landingIntent);
+        }
+
+        setContentView(R.layout.activity_main);
 
         signInBtn = (Button) findViewById(R.id.signInBtn);
         signUpLink = (TextView) findViewById(R.id.signUpLink);
@@ -113,6 +134,7 @@ public class LogInActivity extends AppCompatActivity {
                 startActivity(activateIntent);
             } else if(this.userName.equals(user.getUserName()) && this.password.equals(user.getPassword())){
                 Intent landingIntent;
+                session.setSessionUsername(userName.trim());
                 if(user.isBand()){
                     landingIntent = new Intent(getApplicationContext(), BandLandingPageActivity.class);
                     landingIntent.putExtra("user", user);

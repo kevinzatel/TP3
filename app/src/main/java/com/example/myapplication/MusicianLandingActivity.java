@@ -10,8 +10,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MusicianLandingActivity extends AppCompatActivity {
 
-    Button viewProfile, findBanda, mySolicitudes;
+    Button viewProfile, findBanda, mySolicitudes, musicianLogOutBtn;
     TextView welcometxt;
+    Session session;
     User user;
 
     @Override
@@ -19,10 +20,12 @@ public class MusicianLandingActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_musician_landing_page);
+        session = new Session(getApplicationContext());
 
         viewProfile = (Button) findViewById(R.id.btEditPerfil);
         findBanda = (Button) findViewById(R.id.btFindBanda);
         mySolicitudes = (Button) findViewById(R.id.btSolicitudes);
+        musicianLogOutBtn = (Button) findViewById(R.id.musicianLogOutBtn);
         welcometxt = findViewById(R.id.welcomeTxt);
         user = (User) getIntent().getSerializableExtra("user");
 
@@ -53,6 +56,15 @@ public class MusicianLandingActivity extends AppCompatActivity {
                 Intent bandSearchIntent = new Intent(getApplicationContext(), MusicianBandSearchActivity.class);
                 bandSearchIntent.putExtra("user", user);
                 startActivity(bandSearchIntent);
+            }
+        });
+
+        musicianLogOutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                session.setSessionUsername("");
+                Intent intent = new Intent(getApplicationContext(), LogInActivity.class);
+                startActivity(intent);
             }
         });
     }

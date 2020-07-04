@@ -11,20 +11,25 @@ import android.widget.TextView;
 public class BandLandingPageActivity extends AppCompatActivity {
 
     DataBaseHelper db;
+    Session session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_band_landing_page);
 
         db = new DataBaseHelper();
+        session = new Session(getApplicationContext());
         final User updatedUser = (User) getIntent().getSerializableExtra("user");
+
         Button findMusicianBtn = findViewById(R.id.findMusicianBtn);
         Button editSearchBtn = findViewById(R.id.editSearchBtn);
         Button desactivateSearchBtn = findViewById(R.id.desactivateSearchBtn);
         Button editAccountBtn = findViewById(R.id.editAccountBtn);
         Button editProfileBtn = findViewById(R.id.editProfileBtn);
         Button btRequests = findViewById(R.id.btRequests);
+        Button bandLogOutBtn = findViewById(R.id.bandLogOut);
         TextView welcomeText = (TextView) findViewById(R.id.welcomeTxt);
 
         welcomeText.append(" " + updatedUser.getNickname());
@@ -93,7 +98,14 @@ public class BandLandingPageActivity extends AppCompatActivity {
 
             }
         });
-
+        bandLogOutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                session.setSessionUsername("");
+                Intent intent = new Intent(getApplicationContext(), LogInActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void goToSearchMusicianActivity(User user){
