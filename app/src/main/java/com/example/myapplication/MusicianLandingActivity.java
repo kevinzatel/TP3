@@ -26,7 +26,7 @@ public class MusicianLandingActivity extends AppCompatActivity {
         welcometxt = findViewById(R.id.welcomeTxt);
         user = (User) getIntent().getSerializableExtra("user");
 
-        welcometxt.setText("Bienvenido " + user.getNickname() + " !");
+        welcometxt.setText("Bienvenido " + user.getNickname());
 
         viewProfile.setOnClickListener(new View.OnClickListener() {
             @Override

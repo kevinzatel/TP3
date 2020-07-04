@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class BandLandingPageActivity extends AppCompatActivity {
+
     DataBaseHelper db;
 
     @Override
@@ -18,7 +19,6 @@ public class BandLandingPageActivity extends AppCompatActivity {
 
         db = new DataBaseHelper();
         final User updatedUser = (User) getIntent().getSerializableExtra("user");
-        //final User updatedUser = db.getUser(user.getUserName());
         Button findMusicianBtn = findViewById(R.id.findMusicianBtn);
         Button editSearchBtn = findViewById(R.id.editSearchBtn);
         Button desactivateSearchBtn = findViewById(R.id.desactivateSearchBtn);
@@ -87,7 +87,7 @@ public class BandLandingPageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent requestsIntent = new Intent(getApplicationContext(),BandRequestsActivity.class);
+                Intent requestsIntent = new Intent(getApplicationContext(), BandRequestsActivity.class);
                 requestsIntent.putExtra("user",updatedUser);
                 startActivity(requestsIntent);
 

@@ -28,6 +28,11 @@
         <item>Caballito</item>
         <item>Mataderos</item>
     </string-array>
+    <string-array name="status">
+        <item>Pendiente</item>
+        <item>Aceptada</item>
+        <item>Rechazada</item>
+    </string-array>
     <string-array name="pais_busqueda">
         <item>Argentina</item>
     </string-array>

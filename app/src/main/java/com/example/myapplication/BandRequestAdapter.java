@@ -5,10 +5,12 @@ import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -55,33 +57,35 @@ public class BandRequestAdapter extends BaseAdapter implements ListAdapter {
 
         if(view==null) {
             LayoutInflater LayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            //view = LayoutInflater.from(mContext).inflate(R.layout.band_request_row, null);
             view = LayoutInflater.inflate(R.layout.band_request_row, null);
         }
-            Requests req = reqList.get(position);
 
+            final Requests req = reqList.get(position);
             TextView idband =  view.findViewById(R.id.idBand);
             idband.setText(req.getIdMusician());
 
             TextView rqDate = (TextView) view.findViewById(R.id.rqDate);
             rqDate.setText(req.getDate());
 
+            Spinner status = view.findViewById(R.id.spRequest);
+            String [] statusItems = mContext.getResources().getStringArray(R.array.status);
+            ArrayAdapter<String> statusAdapter = new ArrayAdapter<>(mContext, R.layout.spinner_layout, statusItems);
 
+            status.setAdapter(statusAdapter);
+            status.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view,
+                                           int position, long id) {
+                    req.setState(((String) parent.getItemAtPosition(position)).toLowerCase());
+                }
 
-            
-         /*   if(req.getState().equals("pendiente")){
-               boton.setBackgroundResource(R.drawable.custom_button);
-               } else if (req.getState().equals("aceptada")){
-                boton.setBackgroundResource(R.drawable.custom_button_ok);
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
 
-                } else {
-                boton.setBackgroundResource(R.drawable.custom_button_rejected);
-            }*/
-
+                }
+            });
 
             return view;
-
-
 
     }
 }

@@ -13,10 +13,15 @@ public class MusicianProfileActivity extends AppCompatActivity {
 
     TextView nombre,phone,username,welcomeTxt;
     Button btEditProfile,btBack;
+    User updatedUser;
+    DataBaseHelper db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
          super.onCreate(savedInstanceState);
          setContentView(R.layout.activity_musician_profile);
+         db = new DataBaseHelper();
 
          final User user = (User) getIntent().getSerializableExtra("user");
 
@@ -25,13 +30,12 @@ public class MusicianProfileActivity extends AppCompatActivity {
          phone= findViewById(R.id.msPhone);
          username=findViewById(R.id.msUsername);
          welcomeTxt=findViewById(R.id.welcomeTxt);
+         updatedUser = db.getUser(user.getUserName());
 
-
-        nombre.setText(user.getNickname());
         welcomeTxt.append("Bienvenido :)");
-
-        phone.setText(user.getPhone());
-        username.setText(user.getUserName());
+        nombre.setText(updatedUser.getNickname());
+        phone.setText(updatedUser.getPhone());
+        username.setText(updatedUser.getUserName());
 
         btEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,14 +46,7 @@ public class MusicianProfileActivity extends AppCompatActivity {
 
             }
         });
-
-
-
-
     }
-
-
-
 }
 
 

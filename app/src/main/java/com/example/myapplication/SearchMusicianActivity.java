@@ -50,15 +50,15 @@ public class SearchMusicianActivity extends AppCompatActivity {
                 if(bateriaBox.isChecked()) selectedMusicians.add(musicianTypes[2]);
                 if(vozBox.isChecked()) selectedMusicians.add(musicianTypes[3]);
                 if(selectedMusicians.size() == 0) {
-                    Toast.makeText(SearchMusicianActivity.this, "Por favor seleccione al menos un instrumento para activar la búsqueda.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(SearchMusicianActivity.this, "Por favor, selecciona al menos un instrumento para activar la búsqueda", Toast.LENGTH_LONG).show();
                 }
                 else{
                         try {
                             db.activateMusicianSearch(user, selectedMusicians);
-                            Toast.makeText(SearchMusicianActivity.this, "Búsqueda activada.", Toast.LENGTH_LONG).show();
+                            Toast.makeText(SearchMusicianActivity.this, "Búsqueda Activada", Toast.LENGTH_LONG).show();
                         }
                         catch (Exception e){
-                            Toast.makeText(SearchMusicianActivity.this, "Error en conexión con base de datos.", Toast.LENGTH_LONG).show();
+                            Toast.makeText(SearchMusicianActivity.this, "Ocurrió un error interno. Intentá nuevamente", Toast.LENGTH_LONG).show();
                         }
                         finally {
                             User updatedUser = db.getUser(user.getUserName());

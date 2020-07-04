@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -92,6 +93,9 @@ public class BandDetailActivity extends AppCompatActivity {
                 requestBtn.setVisibility(View.INVISIBLE);
                 requestSuccess.setVisibility(View.VISIBLE);
                 Toast.makeText(BandDetailActivity.this, "Solicitud Enviada", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getApplicationContext(), MusicianLandingActivity.class);
+                intent.putExtra("user", userLogged);
+                startActivity(intent);
             }
             else {
                 requestBtn.setEnabled(true);

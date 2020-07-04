@@ -43,7 +43,7 @@ public class MusicianBandSearchActivity extends AppCompatActivity {
         searchBandBtn = (Button) findViewById(R.id.startSearchBtn);
 
         progressBarSearch.setVisibility(View.INVISIBLE);
-        noResultsImg.setVisibility(View.VISIBLE);
+        noResultsImg.setVisibility(View.INVISIBLE);
         searchBandBtn.setVisibility(View.VISIBLE);
 
         fillDropDowns();
@@ -101,7 +101,7 @@ public class MusicianBandSearchActivity extends AppCompatActivity {
             timeOfDayDropDown.setEnabled(true);
             instrumentDropDown.setEnabled(true);
 
-            if(bands!=null) {
+            if(bands!=null && !bands.isEmpty()) {
                 BandSearchAdapter bandAdapter = new BandSearchAdapter(user, bands, MusicianBandSearchActivity.this);
                 bandsListView.setAdapter(bandAdapter);
                 ((BaseAdapter) bandAdapter).notifyDataSetChanged();

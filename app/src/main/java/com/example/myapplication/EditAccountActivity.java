@@ -38,11 +38,11 @@ public class EditAccountActivity extends AppCompatActivity {
                 if(isUserFormValid(user, userName, password, confirmPassword)){
                     try{
                         db.updateBandAccount(user, userName, password);
-                        Toast.makeText(EditAccountActivity.this, "Datos actualizados correctamente", Toast.LENGTH_LONG).show();
+                        Toast.makeText(EditAccountActivity.this, "Datos Actualizados Correctamente", Toast.LENGTH_LONG).show();
                         volver(userName);
                     }catch(Exception ex)
                     {
-                        Toast.makeText(EditAccountActivity.this, "Error en la conexión con la base de datos.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(EditAccountActivity.this, "Ocurrió un error interno. Intentá nueamente", Toast.LENGTH_LONG).show();
                     }
                 }
             }

@@ -261,8 +261,8 @@ public class DataBaseHelper {
 
         ArrayList<Requests> requestsArrayList = null;
         Task<QuerySnapshot> task = db.collection(REQUESTS_COLLECTION_NAME)
-
-                .whereEqualTo("idBand",idband)
+                .whereEqualTo("idBand", idband)
+                .whereEqualTo("state", "pendiente")
                 .get();
 
         while (!task.isComplete()) {}
@@ -281,6 +281,54 @@ public class DataBaseHelper {
             }
         }
         return requestsArrayList;
+    }
+
+    public boolean updateRequestStatus(String idBand, String idMusician, String state){
+
+        Boolean result = false;
+
+        ArrayList<String> requestsArrayList = null;
+        Task<QuerySnapshot> task = db.collection(REQUESTS_COLLECTION_NAME)
+                .whereEqualTo("idBand", idBand)
+                .whereEqualTo("idMusician", idMusician)
+                .whereEqualTo("state", "pendiente")
+                .get();
+
+        while (!task.isComplete()) {}
+
+        if (task.isSuccessful()) {
+            QuerySnapshot queryDocumentSnapshots = task.getResult();
+
+            if (!queryDocumentSnapshots.isEmpty()) {
+                List<DocumentSnapshot> reqList = queryDocumentSnapshots.getDocuments();
+                requestsArrayList = new ArrayList<>();
+
+                for(DocumentSnapshot u : reqList){
+                    String readedReq = u.getId();
+                    requestsArrayList.add(readedReq);
+                }
+            }
+        }
+
+        if (requestsArrayList != null) {
+
+            Boolean status = true;
+
+            for(String id : requestsArrayList){
+
+                Task<Void> task2 = db.collection(REQUESTS_COLLECTION_NAME).document(id).update("state", state);
+
+                while (!task2.isComplete()){}
+
+                if(!task2.isSuccessful()) { status = false; }
+
+            }
+
+            if (status){
+                result = true;
+            }
+        }
+        return result;
     }
 
 }

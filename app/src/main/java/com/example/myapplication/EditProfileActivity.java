@@ -72,7 +72,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     longitude = String.valueOf(address.getLongitude());
                 try{
                     db.updateBandProfile(user, nickname, phone, direccion, latitude, longitude, district, timeOfDay);
-                    Toast.makeText(EditProfileActivity.this, "Datos actualizados", Toast.LENGTH_LONG).show();
+                    Toast.makeText(EditProfileActivity.this, "Datos Actualizados", Toast.LENGTH_LONG).show();
                     volver(user.getUserName());
                 }catch (Exception ex){
                     Toast.makeText(EditProfileActivity.this, "Ocurrió un error interno. Por favor, intentá nuevamente", Toast.LENGTH_LONG).show();
