@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class EditProfileActivity extends AppCompatActivity {
+
     EditText nickTxt, telefonoTxt, direccionTxt;
     Spinner timeOfDayDropDown, districtDropDown;
     DataBaseHelper db;
@@ -30,7 +31,6 @@ public class EditProfileActivity extends AppCompatActivity {
     ImageView checkOkIcon;
     ArrayAdapter<String> districtAdapter, timeOfDayAdapter;
     ProgressBar progressBarBand;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +84,7 @@ public class EditProfileActivity extends AppCompatActivity {
         searchAdressBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkOkIcon.setVisibility(View.GONE);
+                checkOkIcon.setVisibility(View.INVISIBLE);
                 validateAdress();
             }
         });
@@ -201,7 +201,7 @@ public class EditProfileActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             progressBarBand.setVisibility(View.VISIBLE);
-            checkOkIcon.setVisibility(View.GONE);
+            checkOkIcon.setVisibility(View.INVISIBLE);
             guardarBtn.setEnabled(false);
             searchAdressBtn.setEnabled(false);
         }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Lets Play</string>
+    <string name="app_name">Let\'s Play</string>
     <string-array name="tipo">
         <item>Músico</item>
         <item>Banda</item>
